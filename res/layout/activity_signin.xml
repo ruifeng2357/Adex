@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:id="@+id/rlParent" android:background="@drawable/launchback">
+
+    <ScrollView android:layout_width="match_parent" android:layout_height="match_parent">
+
+        <RelativeLayout android:layout_width="match_parent" android:layout_height="match_parent">
+
+            <ImageView android:layout_width="320px" android:layout_height="60px"
+                    android:layout_centerHorizontal="true" android:layout_marginTop="105px"
+                    android:src="@drawable/title" android:scaleType="fitCenter" />
+
+            <EditText android:layout_width="550px" android:layout_height="80px"
+                    android:background="@android:color/transparent" android:layout_marginTop="275px"
+                    android:layout_centerHorizontal="true" android:textColor="@color/gomock_white"
+                    android:paddingLeft="10px" android:singleLine="true" android:ellipsize="end"
+                    android:textSize="@dimen/gomock_buttontitle" android:id="@+id/editEmail"
+                    android:inputType="textEmailAddress" android:hint="Email" />
+
+            <ImageView android:layout_width="wrap_content" android:layout_height="2px"
+                    android:layout_below="@+id/editEmail" android:layout_marginTop="3px"
+                    android:background="@color/gomock_white" android:layout_alignLeft="@+id/editEmail"
+                    android:layout_alignRight="@+id/editEmail"/>
+
+            <EditText android:layout_width="550px" android:layout_height="80px"
+                      android:background="@android:color/transparent" android:layout_marginTop="30px"
+                      android:layout_below="@+id/editEmail"
+                      android:layout_centerHorizontal="true" android:textColor="@color/gomock_passwordtextcolor"
+                      android:paddingLeft="10px" android:singleLine="true" android:ellipsize="end"
+                      android:textSize="@dimen/gomock_buttontitle" android:id="@+id/editPassword"
+                      android:inputType="textEmailAddress" android:hint="Password" />
+
+            <ImageView android:layout_width="wrap_content" android:layout_height="2px"
+                       android:layout_below="@+id/editPassword" android:layout_marginTop="3px"
+                       android:background="@color/gomock_white" android:layout_alignLeft="@+id/editEmail"
+                       android:layout_alignRight="@+id/editEmail"/>
+
+            <Button android:layout_width="550px" android:layout_height="80px"
+                    android:background="@drawable/roundredred" android:layout_marginTop="690px"
+                    android:layout_centerHorizontal="true" android:textColor="@color/gomock_white"
+                    android:id="@+id/buttonSignin"
+                    android:textSize="@dimen/gomock_buttontitle" android:text="LOGIN ON GoMOCK"/>
+
+            <Button android:layout_width="550px" android:layout_height="80px"
+                    android:background="@drawable/roundgraygray" android:layout_marginTop="805px"
+                    android:layout_centerHorizontal="true" android:textColor="@color/gomock_white"
+                    android:textSize="@dimen/gomock_buttontitle" android:text="SIGN UP ON GoMOCK"/>
+
+            <LinearLayout android:layout_width="550px" android:layout_height="80px"
+                    android:layout_marginTop="995px"
+                    android:layout_centerHorizontal="true" android:orientation="horizontal" >
+
+                <TextView android:layout_width="320px" android:layout_height="match_parent"
+                        android:text="TAKE A TOUR" android:textColor="@color/gomock_white"
+                        android:textSize="@dimen/gomock_buttontitle" android:gravity="center_vertical|right" />
+
+                <ImageView android:layout_width="44px" android:layout_height="44px"
+                        android:src="@drawable/icon_tour" android:layout_marginLeft="40px"
+                        android:layout_gravity="center_vertical"/>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+</RelativeLayout>
+

@@ -1,0 +1,7 @@
+<resources>
+
+    <!-- round corner for welcome screen -->
+    <color name="gomock_white">#ffffff</color>
+    <color name="gomock_passwordtextcolor">#f0454d</color>
+
+</resources>

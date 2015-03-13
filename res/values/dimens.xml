@@ -1,0 +1,6 @@
+<resources>
+
+    <!-- round corner for welcome screen -->
+    <dimen name="gomock_buttontitle">30px</dimen>
+
+</resources>

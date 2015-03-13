@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:id="@+id/rlParent" android:background="@drawable/launchback">
+
+    <ImageView android:layout_width="320px" android:layout_height="60px"
+            android:layout_centerHorizontal="true" android:layout_marginTop="60px"
+            android:src="@drawable/title" android:scaleType="fitCenter" />
+
+    <ImageView android:layout_width="212px" android:layout_height="212px"
+            android:src="@drawable/launchmark" android:layout_centerHorizontal="true"
+            android:layout_marginTop="310px" android:scaleType="fitCenter" />
+
+    <Button android:layout_width="550px" android:layout_height="80px"
+            android:id="@+id/buttonSignup"
+            android:background="@drawable/roundredred" android:layout_marginTop="670px"
+            android:layout_centerHorizontal="true" android:textColor="@color/gomock_white"
+            android:textSize="@dimen/gomock_buttontitle" android:text="SIGN UP ON GoMOCK"/>
+
+    <Button android:layout_width="550px" android:layout_height="80px"
+            android:id="@+id/buttonSignin"
+            android:background="@drawable/roundgraygray" android:layout_marginTop="805px"
+            android:layout_centerHorizontal="true" android:textColor="@color/gomock_white"
+            android:textSize="@dimen/gomock_buttontitle" android:text="I'M ALREADY HAVE ANACCOUNT"/>
+
+    <LinearLayout android:layout_width="550px" android:layout_height="80px"
+            android:layout_marginTop="995px"
+            android:layout_centerHorizontal="true" android:orientation="horizontal" >
+
+        <TextView android:layout_width="320px" android:layout_height="match_parent"
+                android:text="TAKE A TOUR" android:textColor="@color/gomock_white"
+                android:textSize="@dimen/gomock_buttontitle" android:gravity="center_vertical|right" />
+
+        <ImageView android:layout_width="44px" android:layout_height="44px"
+                android:src="@drawable/icon_tour" android:layout_marginLeft="40px"
+                android:layout_gravity="center_vertical"/>
+
+    </LinearLayout>
+
+</RelativeLayout>
+
