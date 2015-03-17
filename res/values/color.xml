@@ -1,7 +1,17 @@
 <resources>
 
     <!-- round corner for welcome screen -->
-    <color name="gomock_white">#ffffff</color>
-    <color name="gomock_passwordtextcolor">#f0454d</color>
+    <color name="adex_white">#ffffff</color>
+    <color name="adex_black">#000000</color>
+    <color name="adex_passwordtextcolor">#f0454d</color>
+    <color name="adex_mainmenubackcolor">#1dbece</color>
+    <color name="adex_navvarcolor">#00182c</color>
+    <color name="adex_mainmenubackdarkcolor">#10a6ba</color>
+    <color name="adex_tintcolor">#1586C8</color>
+
+    <color name="adex_navselectedcolor">#CCCCCC</color>
+    <color name="adex_settingselectedback">#1d9fb2</color>
+    <color name="adex_settingunselectedback">#1dbece</color>
+    <color name="adex_scanmenubackcolor">#ba2025</color>
 
 </resources>

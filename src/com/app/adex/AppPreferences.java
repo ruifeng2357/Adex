@@ -4,18 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Donald Pae
- * Date: 1/18/14
- * Time: 4:51 PM
- * To change this template use File | Settings | File Templates.
- */
 public class AppPreferences {
-    // define keys for preferences
-    private static final String APP_SHARED_PREFS = "VitiminDemo";
-
-    private static final String KEY_SERVERSTARTED = "ServerStarted";
+    private static final String APP_SHARED_PREFS = "Adex";
 
     private SharedPreferences shared_preferences;
     private SharedPreferences.Editor shared_preferences_editor;
@@ -24,22 +14,22 @@ public class AppPreferences {
         this.shared_preferences = context.getSharedPreferences(APP_SHARED_PREFS, Activity.MODE_PRIVATE);
         this.shared_preferences_editor = shared_preferences.edit();
     }
-/*
-    public int getSelectedBasic() {
-        return shared_preferences.getInt(KEY_BASIC, CommonData.getDefaultBasic());
-    }
 
-    public void setSelectedBasic(int selectedBasic) {
-        shared_preferences_editor.putInt(KEY_BASIC, selectedBasic);
+    public void setFirstRun(boolean isFirstRun) {
+        shared_preferences_editor.putBoolean("FirstRun", isFirstRun);
         shared_preferences_editor.commit();
-    }
-*/
-public void setServerStarted(boolean isStarted) {
-    shared_preferences_editor.putBoolean(KEY_SERVERSTARTED, isStarted);
-    shared_preferences_editor.commit();
 }
 
-    public boolean isServerStarted() {
-        return shared_preferences.getBoolean(KEY_SERVERSTARTED, false);
+    public boolean getFirstRun() {
+        return shared_preferences.getBoolean("FirstRun", true);
+    }
+
+    public void setSettingVal(int settingVal) {
+        shared_preferences_editor.putInt("SettingVal", settingVal);
+        shared_preferences_editor.commit();
+    }
+
+    public int getSettingVal() {
+        return shared_preferences.getInt("SettingVal", 0);
     }
 }

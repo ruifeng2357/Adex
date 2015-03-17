@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:id="@+id/rlParent" android:background="@drawable/menuback">
+
+    <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="936px" android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true" android:background="@color/adex_mainmenubackcolor">
+
+        <RelativeLayout android:layout_width="360px" android:layout_height="312px"
+                android:id="@+id/rlScan" android:background="@color/adex_scanmenubackcolor"
+                android:gravity="center">
+            <ImageView android:layout_width="225px" android:layout_height="225px"
+                    android:src="@drawable/icon_adexscan" android:scaleType="fitCenter"/>
+        </RelativeLayout>
+
+        <RelativeLayout android:layout_width="360px" android:layout_height="312px"
+                        android:id="@+id/rlDeal" android:layout_alignTop="@+id/rlScan"
+                android:layout_toRightOf="@+id/rlScan">
+            <ImageView android:layout_width="137px" android:layout_height="139px"
+                       android:src="@drawable/icon_deal" android:scaleType="fitCenter"
+                       android:layout_centerInParent="true"/>
+            <TextView android:layout_width="match_parent" android:layout_height="50px"
+                    android:layout_alignParentBottom="true" android:text="DEALS"
+                    style="@style/adex_icontext"/>
+        </RelativeLayout>
+
+        <RelativeLayout android:layout_width="360px" android:layout_height="312px"
+                        android:id="@+id/rlEvent" android:layout_alignLeft="@+id/rlScan"
+                        android:layout_below="@+id/rlScan">
+            <ImageView android:layout_width="134px" android:layout_height="134px"
+                       android:src="@drawable/icon_event" android:scaleType="fitCenter"
+                       android:layout_centerInParent="true"/>
+            <TextView android:layout_width="match_parent" android:layout_height="50px"
+                      android:layout_alignParentBottom="true" android:text="ACTIVITIES"
+                      style="@style/adex_icontext"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout android:layout_width="360px" android:layout_height="312px"
+                        android:id="@+id/rlSchedule" android:layout_alignLeft="@+id/rlDeal"
+                        android:layout_below="@+id/rlDeal" android:background="@drawable/menuitemback">
+            <ImageView android:layout_width="196px" android:layout_height="163px"
+                       android:src="@drawable/icon_schedule" android:scaleType="fitCenter"
+                       android:layout_centerInParent="true"/>
+            <TextView android:layout_width="match_parent" android:layout_height="50px"
+                      android:layout_alignParentBottom="true" android:text="PROGRAMMES"
+                      style="@style/adex_icontext"/>
+        </RelativeLayout>
+
+        <RelativeLayout android:layout_width="360px" android:layout_height="312px"
+                        android:id="@+id/rlPlan" android:layout_alignLeft="@+id/rlEvent"
+                        android:layout_below="@+id/rlEvent" android:background="@drawable/menuitemback">
+            <ImageView android:layout_width="138px" android:layout_height="139px"
+                       android:src="@drawable/icon_plan" android:scaleType="fitCenter"
+                       android:layout_centerInParent="true"/>
+            <TextView android:layout_width="match_parent" android:layout_height="50px"
+                      android:layout_alignParentBottom="true" android:text="FLOOR PLAN"
+                      style="@style/adex_icontext"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout android:layout_width="360px" android:layout_height="312px"
+                        android:id="@+id/rlExhibitor" android:layout_alignLeft="@+id/rlSchedule"
+                        android:layout_below="@+id/rlSchedule">
+            <ImageView android:layout_width="160px" android:layout_height="129px"
+                       android:src="@drawable/icon_exhibitor" android:scaleType="fitCenter"
+                       android:layout_centerInParent="true"/>
+            <TextView android:layout_width="match_parent" android:layout_height="50px"
+                      android:layout_alignParentBottom="true" android:text="EXHIBITORS"
+                      style="@style/adex_icontext"/>
+        </RelativeLayout>
+
+    </RelativeLayout>
+</RelativeLayout>
+

@@ -1,0 +1,22 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="start"
+    android:background="#CCCCCC"
+    android:fitsSystemWindows="true"
+    tools:ignore="MissingPrefix">
+
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:cacheColorHint="@android:color/transparent"
+        android:choiceMode="singleChoice"
+        android:fitsSystemWindows="true"
+        android:divider="@android:color/transparent"
+        android:background="#CCCCCC"
+        android:dividerHeight="1px" />
+
+</RelativeLayout>

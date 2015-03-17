@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:id="@+id/rlParent" android:background="@color/adex_navvarcolor">
+
+    <RelativeLayout
+            android:layout_width="fill_parent" android:id="@+id/rlTop"
+            android:layout_height="360px" android:layout_alignParentTop="true"
+            android:background="@color/adex_navvarcolor">
+
+        <TextView android:layout_width="fill_parent" android:layout_height="160px"
+                  android:layout_alignParentTop="true"
+                android:layout_marginTop="100px" android:text="WHAT AM I\n LOOKING FOR?"
+                style="@style/adex_settingtitletext" android:id="@+id/textTitle" />
+
+        <TextView android:layout_width="fill_parent" android:layout_height="60px"
+                  android:text="You may choose more than one"
+                  style="@style/adex_settingsubtitletext"
+                android:layout_below="@+id/textTitle" android:id="@+id/textSubTitle" />
+
+    </RelativeLayout>
+    <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" android:layout_below="@+id/rlTop">
+        <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" android:id="@+id/rlSettingMenu"
+                android:layout_above="@+id/rlSettingNav">
+            <LinearLayout
+                    android:layout_width="fill_parent" android:layout_height="fill_parent" android:orientation="vertical"
+                    >
+
+                <LinearLayout android:layout_width="fill_parent" android:layout_height="fill_parent"
+                        android:orientation="vertical" android:id="@+id/llSetting" android:weightSum="2">
+
+                    <LinearLayout android:layout_width="fill_parent" android:layout_height="0px"
+                            android:layout_weight="1" android:orientation="horizontal" android:weightSum="2">
+
+                        <LinearLayout android:layout_width="0px" android:layout_height="fill_parent"
+                                android:layout_weight="1" android:orientation="vertical"
+                                android:background="@color/adex_settingselectedback">
+
+                            <RelativeLayout android:layout_width="fill_parent"  android:id="@+id/rlCourses" android:layout_height="fill_parent">
+                                <ImageView android:layout_width="191px" android:layout_height="129px"
+                                           android:src="@drawable/icon_course" android:scaleType="fitCenter"
+                                           android:layout_centerInParent="true"/>
+                                <TextView android:layout_width="fill_parent" android:layout_height="100px"
+                                          android:layout_alignParentBottom="true" android:text="COURSES"
+                                          style="@style/adex_settingmenutext"/>
+                            </RelativeLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout android:layout_width="0px" android:layout_height="fill_parent"
+                                      android:layout_weight="1" android:orientation="vertical"
+                                      android:background="@color/adex_settingunselectedback">
+
+                            <RelativeLayout android:layout_width="fill_parent" android:layout_height="fill_parent"
+                                            android:id="@+id/rlTrips">
+                                <ImageView android:layout_width="221px" android:layout_height="133px"
+                                           android:src="@drawable/icon_trip" android:scaleType="fitCenter"
+                                           android:layout_centerInParent="true"/>
+                                <TextView android:layout_width="fill_parent" android:layout_height="100px"
+                                          android:layout_alignParentBottom="true" android:text="TRIPS"
+                                          style="@style/adex_settingmenutext"/>
+                            </RelativeLayout>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout android:layout_width="fill_parent" android:layout_height="0px"
+                                  android:layout_weight="1" android:orientation="horizontal"  android:weightSum="2">
+
+                        <LinearLayout android:layout_width="0px" android:layout_height="fill_parent"
+                                      android:layout_weight="1" android:orientation="vertical"
+                                      android:background="@color/adex_settingunselectedback">
+
+                            <RelativeLayout android:layout_width="fill_parent" android:layout_height="fill_parent"
+                                            android:id="@+id/rlGear">
+                                <ImageView android:layout_width="150px" android:layout_height="210px"
+                                           android:src="@drawable/icon_gear" android:scaleType="fitCenter"
+                                           android:layout_centerInParent="true"/>
+                                <TextView android:layout_width="fill_parent" android:layout_height="100px"
+                                          android:layout_alignParentBottom="true" android:text="DIVE GEAR"
+                                          style="@style/adex_settingmenutext"/>
+                            </RelativeLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout android:layout_width="0px" android:layout_height="fill_parent"
+                                      android:layout_weight="1" android:orientation="vertical"
+                                      android:background="@color/adex_settingselectedback">
+
+                            <RelativeLayout android:layout_width="fill_parent" android:layout_height="fill_parent"
+                                            android:id="@+id/rlEquip">
+                                <ImageView android:layout_width="221px" android:layout_height="139px"
+                                           android:src="@drawable/icon_equip" android:scaleType="fitCenter"
+                                           android:layout_centerInParent="true"/>
+                                <TextView android:layout_width="fill_parent" android:layout_height="100px"
+                                          android:layout_alignParentBottom="true" android:text="PHOTOGRAPHY\nEQUIPMENT"
+                                          style="@style/adex_settingmenutext"/>
+                            </RelativeLayout>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </RelativeLayout>
+        <RelativeLayout android:layout_width="fill_parent" android:layout_height="128px"
+                android:background="@drawable/navbartitleback"
+                android:id="@+id/rlSettingNav" android:visibility="visible" android:layout_alignParentBottom="true">
+
+            <Button android:layout_width="fill_parent" android:layout_height="fill_parent"
+                    android:text="SUBMIT" style="@style/adex_submitbutton" android:id="@+id/buttonSubmit" />
+
+        </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>
+
