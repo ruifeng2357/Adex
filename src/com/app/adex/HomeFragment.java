@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 public class HomeFragment extends BaseFragment implements View.OnClickListener {
@@ -13,6 +14,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     private RelativeLayout rlSchedule;
     private RelativeLayout rlPlan;
     private RelativeLayout rlExhibitor;
+    private ImageView imageMenuTab;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -30,6 +32,9 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         rlPlan.setOnClickListener(this);
         rlExhibitor = (RelativeLayout) rootView.findViewById(R.id.rlExhibitor);
         rlExhibitor.setOnClickListener(this);
+
+        imageMenuTab = (ImageView) rootView.findViewById(R.id.imageMenuTab);
+        imageMenuTab.setOnClickListener(this);
 
         return rootView;
     }
@@ -58,6 +63,10 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         }
         else if ( v == rlExhibitor ){
             onExhibitor();
+        }
+        else if ( v == imageMenuTab ) {
+            MainMenuActivity activity = (MainMenuActivity)getActivity();
+            activity.openDrawer();
         }
     }
 

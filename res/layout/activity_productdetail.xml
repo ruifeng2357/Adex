@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:id="@+id/rlParent">
+
+    <RelativeLayout
+            android:layout_width="fill_parent" android:id="@+id/rlNavbar"
+            android:layout_height="140px" android:background="@color/adex_navvarcolor">
+
+        <ImageView
+                android:layout_width="86px"
+                android:layout_height="68px"
+                android:id="@+id/imageMenuTab" android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" android:layout_marginLeft="45px" android:layout_centerVertical="true"
+                android:scaleType="fitCenter" android:src="@drawable/icon_menutab"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout android:layout_width="fill_parent" android:layout_height="680px"
+            android:layout_below="@+id/rlNavbar" android:background="@color/adex_white"
+            android:id="@+id/rlProductPhoto">
+        
+        <TextView android:layout_width="fill_parent" android:layout_height="120px"
+                style="@style/adex_productdetailtitle" android:text="PRODUCT DETAILS"
+                android:id="@+id/textProductTitle"/>
+
+        <ImageView android:layout_width="fill_parent" android:layout_height="fill_parent" android:id="@+id/imageProduct"
+                android:layout_below="@+id/textProductTitle"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout android:layout_width="fill_parent" android:layout_height="90px"
+            android:layout_below="@+id/rlProductPhoto" android:background="@color/adex_navvarcolor"
+            android:id="@+id/rlBrand">
+
+        <TextView android:layout_width="360px" android:layout_height="fill_parent"
+                android:id="@+id/textName" style="@style/adex_productnamebrand" android:text="Exhibitor X" />
+
+        <TextView android:layout_width="360px" android:layout_height="fill_parent"
+                  android:id="@+id/textBrand" android:layout_toRightOf="@+id/textName"
+                  style="@style/adex_productnamebrand" android:text="Booth A01" />
+
+    </RelativeLayout>
+
+    <RelativeLayout android:layout_width="fill_parent" android:layout_height="290px"
+            android:background="@color/adex_settingunselectedback" android:layout_below="@+id/rlBrand"
+            android:id="@+id/rlProductInfo">
+    </RelativeLayout>
+
+    <RelativeLayout android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_below="@+id/rlProductInfo"
+            android:background="@drawable/navbartitleback">
+    </RelativeLayout>
+
+</RelativeLayout>
+

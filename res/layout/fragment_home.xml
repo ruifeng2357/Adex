@@ -75,5 +75,11 @@
         </RelativeLayout>
 
     </RelativeLayout>
+    <ImageView
+            android:layout_width="86px"
+            android:layout_height="68px"
+            android:id="@+id/imageMenuTab" android:layout_alignParentTop="true" android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" android:layout_marginLeft="48px" android:layout_marginTop="52px"
+            android:scaleType="fitCenter" android:src="@drawable/icon_menutab"/>
 </RelativeLayout>
 

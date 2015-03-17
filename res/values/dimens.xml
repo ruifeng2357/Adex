@@ -9,5 +9,7 @@
     <dimen name="adex_dealbrandnametext">32px</dimen>
     <dimen name="adex_dealproductnametext">30px</dimen>
     <dimen name="adex_submitbuttontextsize">42px</dimen>
+    <dimen name="adex_productdetailtitletextsize">42px</dimen>
+    <dimen name="adex_productnamebrandtextsize">44px</dimen>
 
 </resources>

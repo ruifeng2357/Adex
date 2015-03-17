@@ -68,4 +68,24 @@
         <item name="android:background">@android:color/transparent</item>
     </style>
 
+    <style name="adex_productdetailtitle">
+        <item name="android:textColor">@color/adex_navvarcolor</item>
+        <item name="android:textSize">@dimen/adex_productdetailtitletextsize</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="adex_productnamebrand">
+        <item name="android:textColor">@color/adex_white</item>
+        <item name="android:textSize">@dimen/adex_productnamebrandtextsize</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:paddingLeft">10px</item>
+        <item name="android:paddingRight">10px</item>
+    </style>
+
 </resources>
