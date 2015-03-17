@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.app.adex"
+          xmlns:tools="http://schemas.android.com/tools"
+          package="com.jilcreation.adex"
           android:versionCode="1"
           android:versionName="1.0">
 
@@ -22,6 +23,33 @@
     <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-feature android:name="android.hardware.camera" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.READ_CALENDAR" />
+
+    <uses-feature
+            android:name="android.hardware.camera"
+            android:required="true" />
+    <uses-feature
+            android:name="android.hardware.camera.autofocus"
+            android:required="true" />
+    <uses-feature
+            android:name="android.hardware.location.gps"
+            android:required="false" />
+    <uses-feature
+            android:name="android.hardware.sensor.accelerometer"
+            android:required="true" />
+    <uses-feature
+            android:name="android.hardware.sensor.compass"
+            android:required="true" />
+    <uses-feature
+            android:glEsVersion="0x00020000"
+            android:required="true" />
+    <supports-screens
+            android:anyDensity="true"
+            android:largeScreens="true"
+            android:normalScreens="true"
+            android:smallScreens="true"
+            android:xlargeScreens="true" />
 
     <application android:label="@string/app_name"
          android:icon="@drawable/ic_launcher"
@@ -29,7 +57,10 @@
          android:screenOrientation="portrait"
          android:largeHeap="true" >
 
-        <activity android:name=".SplashActivity"
+        <uses-library android:name="com.google.android.maps"
+                android:required="false" />
+
+        <activity android:name=".LogoActivity"
                   android:theme="@android:style/Theme.NoTitleBar"
                   android:label="@string/app_name">
 
@@ -50,6 +81,52 @@
                   android:theme="@android:style/Theme.NoTitleBar"
                   android:label="@string/app_name"
                   android:windowSoftInputMode="stateHidden">
+        </activity>
+
+        <activity android:name=".PlanActivity"
+                  android:theme="@android:style/Theme.NoTitleBar"
+                  android:label="@string/app_name"
+                  android:screenOrientation="landscape"
+                  android:windowSoftInputMode="stateHidden">
+        </activity>
+
+        <activity android:name=".AllDealsActivity"
+                  android:theme="@android:style/Theme.NoTitleBar"
+                  android:label="@string/app_name"
+                  android:windowSoftInputMode="stateHidden">
+        </activity>
+
+        <activity android:name=".ProductDetailActivity"
+                  android:theme="@android:style/Theme.NoTitleBar"
+                  android:label="@string/app_name"
+                  android:windowSoftInputMode="stateHidden">
+        </activity>
+
+        <activity android:name=".AdexScanActivity"
+                  android:theme="@android:style/Theme.NoTitleBar"
+                  android:label="@string/app_name"
+                  android:windowSoftInputMode="stateHidden">
+        </activity>
+
+        <activity
+                android:name=".MainActivity"
+                android:configChanges="fontScale|keyboard|keyboardHidden|locale|mnc|mcc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|uiMode|touchscreen"
+                android:screenOrientation="fullSensor"
+                android:theme="@style/Theme.Live" >
+        </activity>
+        <activity android:name=".SplashActivity"
+                  android:theme="@style/Theme.Fullscreen"
+                  android:label="@string/app_name"
+                  android:windowSoftInputMode="stateHidden">
+        </activity>
+        <activity
+                android:name="com.metaio.cloud.plugin.view.POIDetailDialog"
+                android:theme="@style/Theme.POIDialog" >
+        </activity>
+        <activity
+                android:name="com.metaio.cloud.plugin.view.WebViewActivity"
+                android:configChanges="fontScale|keyboard|keyboardHidden|locale|mnc|mcc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|uiMode|touchscreen"
+                android:theme="@android:style/Theme.NoTitleBar" >
         </activity>
 
         <meta-data

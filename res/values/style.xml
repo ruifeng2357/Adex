@@ -88,4 +88,15 @@
         <item name="android:paddingRight">10px</item>
     </style>
 
+    <style name="adex_productcategory">
+        <item name="android:textColor">@color/adex_white</item>
+        <item name="android:textSize">@dimen/adex_productnamebrandtextsize</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:gravity">center_vertical|left</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:paddingLeft">10px</item>
+        <item name="android:paddingRight">10px</item>
+    </style>
+
 </resources>

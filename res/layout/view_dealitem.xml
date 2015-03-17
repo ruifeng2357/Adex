@@ -2,49 +2,81 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="fill_parent"
-              android:layout_height="490px"
+              android:layout_height="420px"
               android:id="@+id/rlParent" android:background="@color/adex_white">
 
     <RelativeLayout android:layout_width="360px" android:layout_height="fill_parent"
-            android:id="@+id/rlLeftDeal">
+            android:id="@+id/rlLeftDeal" android:visibility="invisible">
 
-        <ImageView android:layout_width="fill_parent" android:layout_height="370px"
-                   android:id="@+id/imageLeftDeal" android:scaleType="fitCenter"/>
+        <view android:layout_width="fill_parent"
+              android:layout_height="300px"
+              class="com.jilcreation.ui.SmartImageView.SmartImageView" android:id="@+id/imageLeftDeal"
+              android:scaleType="fitCenter" android:src="@drawable/def_product"/>
 
         <LinearLayout android:layout_width="fill_parent" android:layout_height="fill_parent"
-                      android:id="@+id/llLeftDealBack" android:orientation="vertical"
+                      android:id="@+id/llLeftDealBack" android:orientation="horizontal"
                 android:layout_below="@+id/imageLeftDeal" android:background="@color/adex_mainmenubackcolor"
                 android:weightSum="2">
 
-            <TextView android:layout_width="fill_parent" android:layout_height="0px"
-                    android:layout_weight="1" android:text="Product Brand" android:textColor="@color/adex_white"
-                    style="@style/adex_dealbrandnametext" />
-
-            <TextView android:layout_width="fill_parent" android:layout_height="0px"
-                      android:layout_weight="1" android:text="Product Name" android:textColor="@color/adex_white"
-                      style="@style/adex_dealproductnametext" />
+            <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="270px"
+                    android:layout_height="fill_parent">
+                <TextView android:layout_width="fill_parent" android:layout_height="0px"
+                        android:layout_weight="1" android:textColor="@color/adex_white"
+                        style="@style/adex_dealbrandnametext" android:id="@+id/textLeftBrand"  />
+                <TextView android:layout_width="fill_parent" android:layout_height="0px"
+                          android:layout_weight="1" android:textColor="@color/adex_white"
+                          style="@style/adex_dealproductnametext" android:id="@+id/textLeftName"  />
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="90px"
+                    android:layout_height="fill_parent" android:gravity="center">
+                <ImageView
+                        android:layout_width="61px"
+                        android:layout_height="53px"
+                        android:id="@+id/imageLeftFavorite" android:scaleType="fitCenter"
+                        android:src="@drawable/icon_heartred"/>
+            </LinearLayout>
 
         </LinearLayout>
 
     </RelativeLayout>
 
     <RelativeLayout android:layout_width="360px" android:layout_height="fill_parent"
-            android:id="@+id/rlRightDeal" android:layout_toRightOf="@+id/rlLeftDeal">
+            android:id="@+id/rlRightDeal" android:layout_toRightOf="@+id/rlLeftDeal" android:visibility="invisible">
 
-        <ImageView android:layout_width="fill_parent" android:layout_height="370px"
-                   android:id="@+id/imageRightDeal" android:scaleType="fitCenter"/>
+        <view android:layout_width="fill_parent"
+              android:layout_height="300px"
+              class="com.jilcreation.ui.SmartImageView.SmartImageView" android:id="@+id/imageRightDeal"
+              android:scaleType="fitCenter" android:src="@drawable/def_product"/>
 
         <LinearLayout android:layout_width="fill_parent" android:layout_height="fill_parent"
-                      android:id="@+id/llRightDealBack" android:orientation="vertical"
+                      android:id="@+id/llRightDealBack" android:orientation="horizontal"
                         android:layout_below="@+id/imageRightDeal" android:background="@color/adex_mainmenubackdarkcolor">
 
-            <TextView android:layout_width="fill_parent" android:layout_height="0px"
-                      android:layout_weight="1" android:text="Product Brand" android:textColor="@color/adex_white"
-                      style="@style/adex_dealbrandnametext" />
-
-            <TextView android:layout_width="fill_parent" android:layout_height="0px"
-                      android:layout_weight="1" android:text="Product Name" android:textColor="@color/adex_white"
-                      style="@style/adex_dealproductnametext" />
+            <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="270px"
+                    android:layout_height="fill_parent">
+                <TextView android:layout_width="fill_parent" android:layout_height="0px"
+                          android:layout_weight="1" android:textColor="@color/adex_white"
+                          style="@style/adex_dealbrandnametext" android:id="@+id/textRightBrand" />
+                <TextView android:layout_width="fill_parent" android:layout_height="0px"
+                          android:layout_weight="1" android:textColor="@color/adex_white"
+                          style="@style/adex_dealproductnametext" android:id="@+id/textRightName" />
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="90px"
+                    android:layout_height="fill_parent" android:gravity="center">
+                <ImageView
+                        android:layout_width="61px"
+                        android:layout_height="53px"
+                        android:id="@+id/imageRightFavorite" android:src="@drawable/icon_heartwhite"
+                        android:scaleType="fitCenter"/>
+            </LinearLayout>
 
         </LinearLayout>
 

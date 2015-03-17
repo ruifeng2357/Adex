@@ -1,5 +1,8 @@
 <resources>
 
+    <!-- metaio library -->
+	<color name="background">#FF0654A5</color>
+
     <!-- round corner for welcome screen -->
     <color name="adex_white">#ffffff</color>
     <color name="adex_black">#000000</color>

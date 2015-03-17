@@ -18,7 +18,7 @@
 
     </LinearLayout>
 
-    <com.app.ui.ScrimInsetsFrameLayout
+    <com.jilcreation.ui.ScrimInsetsFrameLayout
         android:id="@+id/relativeDrawer"
         android:layout_width="450px"
         android:layout_height="match_parent"
@@ -28,6 +28,6 @@
 
         <include android:fitsSystemWindows="true" layout="@layout/navigation_list_drawer" />
 
-    </com.app.ui.ScrimInsetsFrameLayout>
+    </com.jilcreation.ui.ScrimInsetsFrameLayout>
 
 </android.support.v4.widget.DrawerLayout>

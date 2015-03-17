@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:id="@+id/rlParent" android:background="@color/adex_white">
+
+    <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="140px" android:background="@color/adex_navvarcolor" android:id="@+id/rlNavbar">
+
+        <ImageView
+                android:layout_width="86px"
+                android:layout_height="68px"
+                android:id="@+id/imageMenu" android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true" android:layout_marginLeft="30px"
+                android:scaleType="fitCenter" android:src="@drawable/icon_menutab"/>
+
+    </RelativeLayout>
+    <LinearLayout
+            android:layout_width="fill_parent" android:orientation="horizontal"
+            android:layout_height="90px" android:id="@+id/rlTitlebar" android:layout_below="@+id/rlNavbar">
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="240px"
+                android:layout_height="fill_parent" android:background="@drawable/rectdealtitle">
+
+            <TextView android:layout_width="fill_parent" android:layout_height="fill_parent"
+                    android:text="All Deals" android:id="@+id/textAllDeals" android:textColor="@color/adex_white"
+                    android:gravity="center" android:textSize="40px" android:textStyle="bold" />
+
+        </LinearLayout>
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="360px"
+                android:layout_height="fill_parent" android:background="@drawable/rectdealtitle">
+
+            <TextView android:layout_width="fill_parent" android:layout_height="fill_parent"
+                      android:text="What's Nearby" android:id="@+id/textNearby" android:textColor="@color/adex_white"
+                      android:gravity="center" android:textSize="40px" android:textStyle="bold" />
+
+        </LinearLayout>
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" android:background="@drawable/rectsearch" android:gravity="center">
+            <ImageView
+                    android:layout_width="58px"
+                    android:layout_height="58px"
+                    android:id="@+id/imageSearch" android:scaleType="fitCenter" android:src="@drawable/icon_search"/>
+        </LinearLayout>
+    </LinearLayout>
+    <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="100px" android:layout_below="@+id/rlTitlebar"
+            android:background="@color/adex_navvarcolor" android:id="@+id/rlSearch">
+        <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/editSearch" android:background="@drawable/roundsearch" android:gravity="left|center_vertical"
+                android:textColor="@color/adex_white" android:layout_marginLeft="20px"
+                android:layout_marginRight="20px" android:layout_marginTop="15px" android:layout_marginBottom="15px"
+                android:paddingLeft="25px" android:paddingRight="25px"
+                android:textSize="36px" android:singleLine="true" android:ellipsize="end"/>
+    </RelativeLayout>
+    <ScrollView android:layout_width="fill_parent" android:layout_height="fill_parent"
+                android:layout_below="@+id/rlSearch"
+                android:layout_above="@+id/rlFooter" >
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" android:id="@+id/llContent">
+        </LinearLayout>
+    </ScrollView>
+    <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="80px" android:layout_alignParentBottom="true"
+            android:background="@drawable/navbartitleback" android:id="@+id/rlFooter">
+        <RelativeLayout
+                android:layout_width="180px"
+                android:layout_height="50px" android:layout_marginLeft="40px" android:layout_centerVertical="true"
+                android:id="@+id/rlBack">
+            <ImageView
+                    android:layout_width="40px"
+                    android:layout_height="fill_parent" android:id="@+id/imageBack"
+                    android:src="@drawable/icon_return" android:scaleType="fitCenter" />
+            <TextView android:layout_width="120px" android:layout_height="fill_parent" android:text="BACK"
+                    android:textColor="@color/adex_navvarcolor" android:layout_toRightOf="@+id/imageBack"
+                    android:gravity="left|center_vertical" android:textSize="40px" android:layout_marginLeft="20px"  />
+        </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>
+

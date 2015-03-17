@@ -1,5 +1,10 @@
 <resources>
 
+	<!-- metaio library -->
+	<dimen name="radarTop">5px</dimen>
+    <dimen name="radarRight">5px</dimen>
+    <dimen name="radarScale">0.5px</dimen>
+
     <!-- round corner for welcome screen -->
     <dimen name="adex_buttontitle">30px</dimen>
     <dimen name="adex_iconnametext">30px</dimen>

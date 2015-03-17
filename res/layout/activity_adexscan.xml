@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:id="@+id/rlParent" android:background="@color/adex_navvarcolor">
+
+    <RelativeLayout android:layout_width="fill_parent" android:layout_height="fill_parent"
+            android:background="@drawable/adexscanback" android:layout_above="@+id/rlScan" >
+    </RelativeLayout>
+
+    <RelativeLayout android:layout_width="fill_parent" android:layout_height="128px"
+            android:background="@drawable/navbartitleback"
+            android:id="@+id/rlScan" android:visibility="visible" android:layout_alignParentBottom="true">
+
+        <Button android:layout_width="fill_parent" android:layout_height="fill_parent"
+                android:text="SCAN" style="@style/adex_submitbutton" android:id="@+id/buttonScan" />
+
+    </RelativeLayout>
+</RelativeLayout>
+
