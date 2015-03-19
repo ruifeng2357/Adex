@@ -1,14 +1,6 @@
 package com.jilcreation.adex;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.telephony.TelephonyManager;
-import android.view.View;
-import android.widget.Button;
-import com.jilcreation.utils.GlobalFunc;
-import com.crashlytics.android.Crashlytics;
 
 public class PlanActivity extends SuperActivity {
     /**
