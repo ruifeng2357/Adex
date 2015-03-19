@@ -1,10 +1,13 @@
 package com.jilcreation.adex;
 
+import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.jilcreation.model.STDealInfo;
+import com.jilcreation.model.modelmanage.SQLiteDBHelper;
 import com.jilcreation.ui.SmartImageView.SmartImageView;
 
 public class ProductDetailActivity extends SuperActivity implements View.OnClickListener {
@@ -18,6 +21,9 @@ public class ProductDetailActivity extends SuperActivity implements View.OnClick
     protected TextView textPrice;
     protected TextView textDetail;
     protected RelativeLayout rlBack;
+    protected ImageView imageFavorited;
+
+    SQLiteDBHelper m_db = null;
     /**
      * Called when the activity is first created.
      */
@@ -25,6 +31,8 @@ public class ProductDetailActivity extends SuperActivity implements View.OnClick
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_productdetail);
+
+        m_db = new SQLiteDBHelper(this);
 
         mDealInfo = getIntent().getParcelableExtra("PRODUCT");
         if (mDealInfo == null) {
@@ -48,6 +56,14 @@ public class ProductDetailActivity extends SuperActivity implements View.OnClick
         textPrice.setText(szPrice);
         textDetail = (TextView) findViewById(R.id.textDetail);
         textDetail.setText(mDealInfo.detail);
+        imageFavorited = (ImageView) findViewById(R.id.imageFavorite);
+        if (m_db.getIsFavorite(mDealInfo.dealId) == 0) {
+            imageFavorited.setImageResource(R.drawable.icon_heartwhite);
+        }
+        else {
+            imageFavorited.setImageResource(R.drawable.icon_heartred);
+        }
+        imageFavorited.setOnClickListener(this);
 
         rlBack = (RelativeLayout) findViewById(R.id.rlBack);
         rlBack.setOnClickListener(this);
@@ -67,6 +83,16 @@ public class ProductDetailActivity extends SuperActivity implements View.OnClick
     public void onClick(View v) {
         if (v == rlBack) {
             finish();
+        }
+        else if (v == imageFavorited) {
+            if (m_db.getIsFavorite(mDealInfo.dealId) == 0) {
+                m_db.setFavorited(mDealInfo.dealId, 1);
+                imageFavorited.setImageResource(R.drawable.icon_heartred);
+            }
+            else {
+                m_db.setFavorited(mDealInfo.dealId, 0);
+                imageFavorited.setImageResource(R.drawable.icon_heartwhite);
+            }
         }
     }
 }

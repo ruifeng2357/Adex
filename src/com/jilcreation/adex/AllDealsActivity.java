@@ -9,15 +9,14 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.jilcreation.model.STDealInfo;
+import com.jilcreation.model.modelmanage.SQLiteDBHelper;
 import com.jilcreation.server.ServerManager;
 import com.jilcreation.server.http.AsyncHttpResponseHandler;
-import com.jilcreation.ui.SmartImageView.Global;
 import com.jilcreation.ui.SmartImageView.SmartImageView;
 import com.jilcreation.utils.GlobalFunc;
 import com.jilcreation.utils.ResolutionSet;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 
 public class AllDealsActivity extends SuperActivity implements View.OnClickListener {
@@ -26,6 +25,8 @@ public class AllDealsActivity extends SuperActivity implements View.OnClickListe
     protected LinearLayout llContent;
 
     ArrayList<STDealInfo> arrDealInfos = new ArrayList<STDealInfo>();
+
+    SQLiteDBHelper m_db = null;
     /**
      * Called when the activity is first created.
      */
@@ -34,8 +35,7 @@ public class AllDealsActivity extends SuperActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alldeal);
 
-        startProgress();
-        ServerManager.getAllDeals(handlerAllDeals);
+        m_db = new SQLiteDBHelper(AllDealsActivity.this);
     }
 
     @Override
@@ -57,6 +57,14 @@ public class AllDealsActivity extends SuperActivity implements View.OnClickListe
     @Override
     public void onStart() {
         super.onStart();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        startProgress();
+        ServerManager.getAllDeals(handlerAllDeals);
     }
 
     @Override
@@ -87,6 +95,7 @@ public class AllDealsActivity extends SuperActivity implements View.OnClickListe
                         dealInfo = STDealInfo.decodeFromJSON(object);
 
                         arrDealInfos.add(dealInfo);
+                        m_db.insert(dealInfo.dealId, dealInfo.merchantId, 0, 0);
                     }
 
                     showDeals();
@@ -133,6 +142,28 @@ public class AllDealsActivity extends SuperActivity implements View.OnClickListe
                 textBrand.setText(stDealInfo1.productBrand);
                 TextView textName = (TextView) view.findViewById(R.id.textLeftName);
                 textName.setText(stDealInfo1.productName);
+                ImageView imageFavorited = (ImageView) view.findViewById(R.id.imageLeftFavorite);
+                if (m_db.getIsFavorite(stDealInfo1.dealId) == 0) {
+                    imageFavorited.setImageResource(R.drawable.icon_heartwhite);
+                }
+                else {
+                    imageFavorited.setImageResource(R.drawable.icon_heartred);
+                }
+                imageFavorited.setTag(stDealInfo1);
+                imageFavorited.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        STDealInfo stDealInfo = (STDealInfo) v.getTag();
+                        if (m_db.getIsFavorite(stDealInfo.dealId) == 0) {
+                            m_db.setFavorited(stDealInfo.dealId, 1);
+                            ((ImageView)v).setImageResource(R.drawable.icon_heartred);
+                        }
+                        else {
+                            m_db.setFavorited(stDealInfo.dealId, 0);
+                            ((ImageView)v).setImageResource(R.drawable.icon_heartwhite);
+                        }
+                    }
+                });
 
                 RelativeLayout rlLeft = (RelativeLayout) view.findViewById(R.id.rlLeftDeal);
                 rlLeft.setVisibility(View.VISIBLE);
@@ -141,6 +172,7 @@ public class AllDealsActivity extends SuperActivity implements View.OnClickListe
                     @Override
                     public void onClick(View v) {
                         STDealInfo stDealInfo = (STDealInfo) v.getTag();
+                        m_db.setTapped(stDealInfo.dealId, 1);
                         Intent intent = new Intent(AllDealsActivity.this, ProductDetailActivity.class);
                         intent.putExtra("PRODUCT", stDealInfo);
                         intent.putExtra(GlobalFunc.ANIM_DIRECTION(), GlobalFunc.ANIM_COVER_FROM_RIGHT());
@@ -156,6 +188,28 @@ public class AllDealsActivity extends SuperActivity implements View.OnClickListe
                 textBrand.setText(stDealInfo2.productBrand);
                 TextView textName = (TextView) view.findViewById(R.id.textRightName);
                 textName.setText(stDealInfo2.productName);
+                ImageView imageFavorited = (ImageView) view.findViewById(R.id.imageRightFavorite);
+                if (m_db.getIsFavorite(stDealInfo2.dealId) == 0) {
+                    imageFavorited.setImageResource(R.drawable.icon_heartwhite);
+                }
+                else {
+                    imageFavorited.setImageResource(R.drawable.icon_heartred);
+                }
+                imageFavorited.setTag(stDealInfo2);
+                imageFavorited.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        STDealInfo stDealInfo = (STDealInfo) v.getTag();
+                        if (m_db.getIsFavorite(stDealInfo.dealId) == 0) {
+                            m_db.setFavorited(stDealInfo.dealId, 1);
+                            ((ImageView)v).setImageResource(R.drawable.icon_heartred);
+                        }
+                        else {
+                            m_db.setFavorited(stDealInfo.dealId, 0);
+                            ((ImageView)v).setImageResource(R.drawable.icon_heartwhite);
+                        }
+                    }
+                });
 
                 RelativeLayout rlRight = (RelativeLayout) view.findViewById(R.id.rlRightDeal);
                 rlRight.setVisibility(View.VISIBLE);
@@ -164,6 +218,7 @@ public class AllDealsActivity extends SuperActivity implements View.OnClickListe
                     @Override
                     public void onClick(View v) {
                         STDealInfo stDealInfo = (STDealInfo) v.getTag();
+                        m_db.setTapped(stDealInfo.dealId, 1);
                         Intent intent = new Intent(AllDealsActivity.this, ProductDetailActivity.class);
                         intent.putExtra("PRODUCT", stDealInfo);
                         intent.putExtra(GlobalFunc.ANIM_DIRECTION(), GlobalFunc.ANIM_COVER_FROM_RIGHT());
