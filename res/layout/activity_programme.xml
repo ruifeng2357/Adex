@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:id="@+id/rlParent" android:background="@color/adex_white">
+
+    <RelativeLayout android:layout_width="fill_parent"
+            android:layout_height="140px" android:background="@color/adex_navvarcolor" android:id="@+id/rlNavbar">
+        
+        <ImageView android:layout_width="64px" android:layout_height="64px" android:id="@+id/imageBack"
+                android:layout_centerVertical="true" android:layout_marginLeft="30px" android:src="@drawable/icon_back"
+                android:scaleType="fitCenter"/>
+        
+        <TextView android:layout_width="450px" android:layout_height="fill_parent" android:text="Programme Schedule"
+                android:layout_centerInParent="true" android:textColor="@color/adex_white" android:textSize="40px"
+                android:gravity="center"/>
+
+    </RelativeLayout>
+    
+    <LinearLayout android:layout_width="fill_parent" android:layout_height="70px"
+                  android:layout_below="@+id/rlNavbar" android:id="@+id/llMenu" android:orientation="horizontal" >
+
+        <TextView android:layout_width="0px" android:layout_height="fill_parent" android:layout_weight="1"
+                android:textSize="32px" android:text="Main Stage" android:singleLine="true" android:ellipsize="end"
+                android:gravity="center" android:textColor="@color/adex_white" android:background="@drawable/roundleftselframe"
+                android:id="@+id/textMain"/>
+
+        <TextView android:layout_width="0px" android:layout_height="fill_parent" android:layout_weight="1"
+                  android:textSize="32px" android:text="Photo/Video Share" android:singleLine="true" android:ellipsize="end"
+                  android:gravity="center" android:textColor="@color/adex_programmemenublue" android:background="@drawable/rectdiselframe"
+                  android:id="@+id/textShare"/>
+
+        <TextView android:layout_width="0px" android:layout_height="fill_parent" android:layout_weight="1"
+                  android:textSize="32px" android:text="Film Festival" android:singleLine="true" android:ellipsize="end"
+                  android:gravity="center" android:textColor="@color/adex_programmemenublue" android:background="@drawable/roundrightdiselframe"
+                  android:id="@+id/textFlim"/>
+
+    </LinearLayout>
+
+    <ScrollView android:layout_width="fill_parent" android:layout_height="fill_parent"
+                android:layout_below="@+id/llMenu" >
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" android:id="@+id/llContent">
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>
+

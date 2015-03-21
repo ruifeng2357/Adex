@@ -23,6 +23,8 @@ public class MainMenuActivity extends NavigationLiveo implements NavigationLiveo
 
     Fragment _currentFragment = null;
     Fragment _homeFragment = null;
+    Fragment _historyFragment = null;
+    Fragment _favouriteFragment = null;
 
     /**
      * Called when the activity is first created.
@@ -76,6 +78,7 @@ public class MainMenuActivity extends NavigationLiveo implements NavigationLiveo
     @Override
     public void onBackPressed() {
         if (_currentFragment == _homeFragment) {
+            finish();
         }
     }
 
@@ -93,10 +96,22 @@ public class MainMenuActivity extends NavigationLiveo implements NavigationLiveo
             }
         }
         else if (position == INDEX_HISTORY) {
-            ;
+            if (_historyFragment == null) {
+                _historyFragment = new HistoryFragment();
+            }
+            if (_currentFragment != _historyFragment) {
+                fragmentManager.beginTransaction().replace(layoutContainerId, _historyFragment).commit();
+                _currentFragment = _historyFragment;
+            }
         }
         else if (position == INDEX_FAVOURITE) {
-            ;
+            if (_favouriteFragment == null) {
+                _favouriteFragment = new FavouriteFragment();
+            }
+            if (_currentFragment != _favouriteFragment) {
+                fragmentManager.beginTransaction().replace(layoutContainerId, _favouriteFragment).commit();
+                _currentFragment = _favouriteFragment;
+            }
         }
         else if (position == INDEX_SETTINGS) {
             Intent intent = new Intent(MainMenuActivity.this, SettingActivity.class);

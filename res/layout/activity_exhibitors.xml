@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:id="@+id/rlParent" android:background="@color/adex_white">
+
+    <RelativeLayout android:layout_width="fill_parent"
+            android:layout_height="140px" android:background="@color/adex_navvarcolor" android:id="@+id/rlNavbar">
+        
+        <ImageView android:layout_width="64px" android:layout_height="64px" android:id="@+id/imageBack"
+                android:layout_centerVertical="true" android:layout_marginLeft="30px" android:src="@drawable/icon_back"
+                android:scaleType="fitCenter"/>
+        
+        <TextView android:layout_width="450px" android:layout_height="fill_parent" android:text="EXHIBITOR LIST"
+                android:layout_centerInParent="true" android:textColor="@color/adex_white" android:textSize="40px"
+                android:gravity="center"/>
+
+    </RelativeLayout>
+
+    <ScrollView android:layout_width="fill_parent" android:layout_height="fill_parent"
+                android:layout_below="@+id/rlNavbar" >
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" android:id="@+id/llContent">
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>
+

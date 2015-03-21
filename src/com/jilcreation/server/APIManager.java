@@ -13,4 +13,6 @@ public class APIManager {
 
     // Command List
     public static String CMD_GETDEALS = API_PREFIX + "/selectservice.php";
+    public static String CMD_GETEXHIBITORS = API_PREFIX + "/selectexhibitorservice.php";
+    public static String CMD_GETPROGRAMMES = API_PREFIX + "/selectscheduleservice.php";
 }

@@ -73,12 +73,14 @@
 
         <activity android:name=".SettingActivity"
                   android:theme="@android:style/Theme.NoTitleBar"
+                  android:screenOrientation="portrait"
                   android:label="@string/app_name"
                   android:windowSoftInputMode="stateHidden">
         </activity>
 
         <activity android:name=".MainMenuActivity"
                   android:theme="@android:style/Theme.NoTitleBar"
+                  android:screenOrientation="portrait"
                   android:label="@string/app_name"
                   android:windowSoftInputMode="stateHidden">
         </activity>
@@ -92,18 +94,35 @@
 
         <activity android:name=".AllDealsActivity"
                   android:theme="@android:style/Theme.NoTitleBar"
+                  android:screenOrientation="portrait"
                   android:label="@string/app_name"
                   android:windowSoftInputMode="stateHidden">
         </activity>
 
         <activity android:name=".ProductDetailActivity"
                   android:theme="@android:style/Theme.NoTitleBar"
+                  android:screenOrientation="portrait"
+                  android:label="@string/app_name"
+                  android:windowSoftInputMode="stateHidden">
+        </activity>
+
+        <activity android:name=".ProgrammeActivity"
+                  android:theme="@android:style/Theme.NoTitleBar"
+                  android:screenOrientation="portrait"
+                  android:label="@string/app_name"
+                  android:windowSoftInputMode="stateHidden">
+        </activity>
+
+        <activity android:name=".ExhibitorActivity"
+                  android:theme="@android:style/Theme.NoTitleBar"
+                  android:screenOrientation="portrait"
                   android:label="@string/app_name"
                   android:windowSoftInputMode="stateHidden">
         </activity>
 
         <activity android:name=".AdexScanActivity"
                   android:theme="@android:style/Theme.NoTitleBar"
+                  android:screenOrientation="portrait"
                   android:label="@string/app_name"
                   android:windowSoftInputMode="stateHidden">
         </activity>

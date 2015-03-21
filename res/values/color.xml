@@ -16,5 +16,8 @@
     <color name="adex_settingselectedback">#1d9fb2</color>
     <color name="adex_settingunselectedback">#1dbece</color>
     <color name="adex_scanmenubackcolor">#ba2025</color>
+    <color name="adex_programmeitemheader">#f7f7f7</color>
+    <color name="adex_programmemenublue">#007aff</color>
+    <color name="adex_gray">#aaaaaa</color>
 
 </resources>

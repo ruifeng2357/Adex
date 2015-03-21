@@ -95,7 +95,7 @@ public class AllDealsActivity extends SuperActivity implements View.OnClickListe
                         dealInfo = STDealInfo.decodeFromJSON(object);
 
                         arrDealInfos.add(dealInfo);
-                        m_db.insert(dealInfo.dealId, dealInfo.merchantId, 0, 0);
+                        m_db.insert(dealInfo.dealId, dealInfo.merchantId, dealInfo.productBrand, dealInfo.productName, dealInfo.imageUrl, 0, 0);
                     }
 
                     showDeals();

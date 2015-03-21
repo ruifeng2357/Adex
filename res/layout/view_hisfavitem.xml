@@ -6,7 +6,7 @@
               android:id="@+id/rlParent">
 
     <RelativeLayout android:layout_width="360px" android:layout_height="fill_parent"
-            android:id="@+id/rlLeftDeal" android:visibility="invisible">
+            android:id="@+id/rlLeftDeal" android:visibility="invisible"  android:background="@color/adex_mainmenubackcolor">
 
         <view android:layout_width="fill_parent"
               android:layout_height="300px"
@@ -15,8 +15,7 @@
 
         <LinearLayout android:layout_width="fill_parent" android:layout_height="fill_parent"
                       android:id="@+id/llLeftDealBack" android:orientation="horizontal"
-                android:layout_below="@+id/imageLeftDeal" android:background="@color/adex_mainmenubackcolor"
-                android:weightSum="2">
+                android:layout_below="@+id/imageLeftDeal" android:weightSum="2">
 
             <LinearLayout
                     android:orientation="vertical"
@@ -45,7 +44,7 @@
     </RelativeLayout>
 
     <RelativeLayout android:layout_width="360px" android:layout_height="fill_parent"
-            android:id="@+id/rlRightDeal" android:layout_toRightOf="@+id/rlLeftDeal" android:visibility="invisible">
+            android:id="@+id/rlRightDeal" android:layout_toRightOf="@+id/rlLeftDeal" android:visibility="invisible"  android:background="@color/adex_mainmenubackcolor">
 
         <view android:layout_width="fill_parent"
               android:layout_height="300px"
@@ -54,7 +53,7 @@
 
         <LinearLayout android:layout_width="fill_parent" android:layout_height="fill_parent"
                       android:id="@+id/llRightDealBack" android:orientation="horizontal"
-                        android:layout_below="@+id/imageRightDeal" android:background="@color/adex_mainmenubackdarkcolor">
+                        android:layout_below="@+id/imageRightDeal">
 
             <LinearLayout
                     android:orientation="vertical"

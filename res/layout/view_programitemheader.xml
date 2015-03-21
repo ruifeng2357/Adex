@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:id="@+id/rlParent" android:background="@color/adex_white">
+
+    <TextView android:layout_width="fill_parent" android:layout_height="60px" android:id="@+id/textHeaderName"
+            android:textColor="@color/adex_black" android:textSize="36px" android:background="@color/adex_programmeitemheader"
+            android:gravity="left|center_vertical" android:singleLine="true" android:ellipsize="end" android:text="Day 1 (10 April 2015)"
+            android:layout_marginLeft="30px" android:textStyle="bold"/>
+
+</RelativeLayout>
+

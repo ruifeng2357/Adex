@@ -83,7 +83,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         Intent intent = new Intent(getActivity(), AllDealsActivity.class);
         intent.putExtra(GlobalFunc.ANIM_DIRECTION(), GlobalFunc.ANIM_COVER_FROM_LEFT());
         getActivity().getIntent().putExtra(GlobalFunc.ANIM_DIRECTION(), GlobalFunc.ANIM_COVER_FROM_RIGHT());
-        startActivity(intent);;
+        startActivity(intent);
     }
 
     private void onEvent() {
@@ -91,7 +91,10 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     }
 
     private void onSchedule() {
-        ;
+        Intent intent = new Intent(getActivity(), ProgrammeActivity.class);
+        intent.putExtra(GlobalFunc.ANIM_DIRECTION(), GlobalFunc.ANIM_COVER_FROM_LEFT());
+        getActivity().getIntent().putExtra(GlobalFunc.ANIM_DIRECTION(), GlobalFunc.ANIM_COVER_FROM_RIGHT());
+        startActivity(intent);
     }
 
     private void onPlan() {
@@ -102,6 +105,9 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     }
 
     private void onExhibitor() {
-        ;
+        Intent intent = new Intent(getActivity(), ExhibitorActivity.class);
+        intent.putExtra(GlobalFunc.ANIM_DIRECTION(), GlobalFunc.ANIM_COVER_FROM_RIGHT());
+        getActivity().getIntent().putExtra(GlobalFunc.ANIM_DIRECTION(), GlobalFunc.ANIM_COVER_FROM_LEFT());
+        startActivity(intent);
     }
 }

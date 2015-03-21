@@ -5,6 +5,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import com.jilcreation.model.STHisFavInfo;
+
+import java.util.ArrayList;
 
 /*
  * Created by Ruifeng
@@ -27,6 +30,9 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
     public final static String FIELD_ID = "uid";
     public final static String FIELD_DEALID = "dealId";
     public final static String FIELD_MERCHANTID = "merchantId";
+    public final static String FIELD_BRAND = "brand";
+    public final static String FIELD_PRODUCTNAME = "productName";
+    public final static String FIELD_IMGURL = "productImg";
     public final static String FIELD_ISTAPPED = "isTapped";
     public final static String FIELD_ISFAVORITED = "isFavorited";
 
@@ -41,6 +47,9 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
         String sql="Create table " + TABLE_NAME + "( " + FIELD_ID + " integer primary key autoincrement,"
                 + FIELD_DEALID + " integer, "
                 + FIELD_MERCHANTID + " integer, "
+                + FIELD_BRAND + " text, "
+                + FIELD_PRODUCTNAME + " text, "
+                + FIELD_IMGURL + " text, "
                 + FIELD_ISTAPPED + " integer, "
                 + FIELD_ISFAVORITED + " integer "
                 + ");";
@@ -159,7 +168,7 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
         return nIsTapped;
     }
 
-    public long insert(long dealId, long merchantId, int isTapped, int isFavorited)
+    public long insert(long dealId, long merchantId, String brandName, String productName, String imgUrl, int isTapped, int isFavorited)
     {
         if (getExistProduct(dealId) > 0)
             return -1;
@@ -171,6 +180,9 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
             ContentValues cv = new ContentValues();
             cv.put(FIELD_DEALID, dealId);
             cv.put(FIELD_MERCHANTID, merchantId);
+            cv.put(FIELD_BRAND, brandName);
+            cv.put(FIELD_PRODUCTNAME, productName);
+            cv.put(FIELD_IMGURL, imgUrl);
             cv.put(FIELD_ISTAPPED, isTapped);
             cv.put(FIELD_ISFAVORITED, isFavorited);
             row = db.insert(TABLE_NAME, null, cv);
@@ -273,5 +285,89 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
         }
 
         return nIsFavorited;
+    }
+
+    public ArrayList<STHisFavInfo> getHistoryList()
+    {
+        Cursor cursor = null;
+        ArrayList<STHisFavInfo> arrayList = new ArrayList<STHisFavInfo>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        try {
+            cursor = db.query(TABLE_NAME,
+                    new String[] { FIELD_DEALID, FIELD_MERCHANTID, FIELD_BRAND, FIELD_PRODUCTNAME, FIELD_IMGURL },
+                    FIELD_ISTAPPED + "=1",
+                    null,
+                    null,
+                    null,
+                    null,
+                    null);
+
+            if (cursor != null)
+                cursor.moveToFirst();
+
+        } catch (Exception ex) {
+            arrayList = new ArrayList<STHisFavInfo>();
+        }
+
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                do {
+                    STHisFavInfo stHisFavInfo = new STHisFavInfo();
+                    stHisFavInfo.dealId = cursor.getLong(0);
+                    stHisFavInfo.merchantId = cursor.getLong(1);
+                    stHisFavInfo.brandName = cursor.getString(2);
+                    stHisFavInfo.productName = cursor.getString(3);
+                    stHisFavInfo.imgUrl = cursor.getString(4);
+
+                    arrayList.add(stHisFavInfo);
+                } while (cursor.moveToNext());
+            }
+        }
+        db.close();
+
+        return arrayList;
+    }
+
+    public ArrayList<STHisFavInfo> getFavouriteList()
+    {
+        Cursor cursor = null;
+        ArrayList<STHisFavInfo> arrayList = new ArrayList<STHisFavInfo>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        try {
+            cursor = db.query(TABLE_NAME,
+                    new String[] { FIELD_DEALID, FIELD_MERCHANTID, FIELD_BRAND, FIELD_PRODUCTNAME, FIELD_IMGURL },
+                    FIELD_ISFAVORITED + "=1",
+                    null,
+                    null,
+                    null,
+                    null,
+                    null);
+
+            if (cursor != null)
+                cursor.moveToFirst();
+
+        } catch (Exception ex) {
+            arrayList = new ArrayList<STHisFavInfo>();
+        }
+
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                do {
+                    STHisFavInfo stHisFavInfo = new STHisFavInfo();
+                    stHisFavInfo.dealId = cursor.getLong(0);
+                    stHisFavInfo.merchantId = cursor.getLong(1);
+                    stHisFavInfo.brandName = cursor.getString(2);
+                    stHisFavInfo.productName = cursor.getString(3);
+                    stHisFavInfo.imgUrl = cursor.getString(4);
+
+                    arrayList.add(stHisFavInfo);
+                } while (cursor.moveToNext());
+            }
+        }
+        db.close();
+
+        return arrayList;
     }
 }
