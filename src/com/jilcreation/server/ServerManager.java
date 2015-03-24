@@ -23,6 +23,24 @@ public class ServerManager {
         }
     }
 
+    public static void getSelectDeal(AsyncHttpResponseHandler handler, long dealId) {
+        String url = APIManager.CMD_SELECTDEAL + "?id=" + dealId;
+
+        try
+        {
+            AsyncHttpClient client = new AsyncHttpClient();
+            client.setTimeout(APIManager.connectTimeout);
+            client.post(url, null, handler);
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+
+            if (handler != null)
+                handler.onFailure(null, ex.getMessage());
+        }
+    }
+
     public static void getAllHibitors(AsyncHttpResponseHandler handler) {
         String url = APIManager.CMD_GETEXHIBITORS;
 
@@ -55,6 +73,60 @@ public class ServerManager {
                 url = url + "?category=" + "third%20stage";
                 break;
         }
+
+        try
+        {
+            AsyncHttpClient client = new AsyncHttpClient();
+            client.setTimeout(APIManager.connectTimeout);
+            client.post(url, null, handler);
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+
+            if (handler != null)
+                handler.onFailure(null, ex.getMessage());
+        }
+    }
+
+    public static void addUser(AsyncHttpResponseHandler handler) {
+        String url = APIManager.CMD_ADDUSER;
+
+        try
+        {
+            AsyncHttpClient client = new AsyncHttpClient();
+            client.setTimeout(APIManager.connectTimeout);
+            client.post(url, null, handler);
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+
+            if (handler != null)
+                handler.onFailure(null, ex.getMessage());
+        }
+    }
+
+    public static void updatePref(AsyncHttpResponseHandler handler, long userId, int a, int b, int c, int d) {
+        String url = APIManager.CMD_SELECTDEAL + "?uid=" + userId + "&a=" + a + "&b=" + b + "&c=" + c + "&d=" + d;
+
+        try
+        {
+            AsyncHttpClient client = new AsyncHttpClient();
+            client.setTimeout(APIManager.connectTimeout);
+            client.post(url, null, handler);
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+
+            if (handler != null)
+                handler.onFailure(null, ex.getMessage());
+        }
+    }
+
+    public static void updateDuration(AsyncHttpResponseHandler handler, long userId, long dealId, long duration) {
+        String url = APIManager.CMD_UPDATEDURATION + "?uid=" + userId + "&did=" + dealId + "&duration=" + duration;
 
         try
         {

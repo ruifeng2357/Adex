@@ -32,4 +32,13 @@ public class AppPreferences {
     public int getSettingVal() {
         return shared_preferences.getInt("SettingVal", 0);
     }
+
+    public void setUserId(long userId) {
+        shared_preferences_editor.putLong("UserId", userId);
+        shared_preferences_editor.commit();
+    }
+
+    public long getUserId() {
+        return shared_preferences.getLong("UserId", 0);
+    }
 }

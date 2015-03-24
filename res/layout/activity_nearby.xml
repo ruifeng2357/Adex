@@ -3,14 +3,21 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:id="@+id/rlParent" android:background="@color/adex_white">
+              android:id="@+id/rlParent"
+              android:background="@color/adex_white">
 
     <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_height="140px" android:background="@color/adex_navvarcolor" android:id="@+id/rlNavbar">
+            android:layout_height="140px"
+            android:background="@color/adex_navvarcolor"
+            android:id="@+id/rlNavbar">
 
-        <ImageView android:layout_width="64px" android:layout_height="64px" android:id="@+id/imageBack"
-                   android:layout_centerVertical="true" android:layout_marginLeft="30px" android:src="@drawable/icon_back"
+        <ImageView android:layout_width="64px"
+                   android:layout_height="64px"
+                   android:id="@+id/imageBack"
+                   android:layout_centerVertical="true"
+                   android:layout_marginLeft="30px"
+                   android:src="@drawable/icon_back"
                    android:scaleType="fitCenter"/>
 
         <!--<ImageView-->
@@ -22,16 +29,25 @@
 
     </RelativeLayout>
     <LinearLayout
-            android:layout_width="fill_parent" android:orientation="horizontal"
-            android:layout_height="90px" android:id="@+id/rlTitlebar" android:layout_below="@+id/rlNavbar">
+            android:layout_width="fill_parent"
+            android:orientation="horizontal"
+            android:layout_height="90px"
+            android:id="@+id/rlTitlebar"
+            android:layout_below="@+id/rlNavbar">
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="240px"
-                android:layout_height="fill_parent" android:background="@drawable/rectdealtitle">
+                android:layout_height="fill_parent"
+                android:background="@drawable/rectdealtitle">
 
-            <TextView android:layout_width="fill_parent" android:layout_height="fill_parent"
-                    android:text="All Deals" android:id="@+id/textAllDeals" android:textColor="@color/adex_white"
-                    android:gravity="center" android:textSize="40px" android:textStyle="bold" />
+            <TextView android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:text="All Deals"
+                        android:id="@+id/textAllDeals"
+                        android:textColor="@color/adex_white"
+                        android:gravity="center"
+                        android:textSize="40px"
+                        android:textStyle="bold" />
 
         </LinearLayout>
         <LinearLayout
@@ -47,17 +63,20 @@
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="fill_parent" android:id="@+id/llSearch"
-                android:layout_height="fill_parent" android:background="@drawable/rectsearch" android:gravity="center">
+                android:layout_height="fill_parent" android:background="@drawable/rectsearch" android:gravity="center"
+                android:visibility="visible">
             <ImageView
                     android:layout_width="58px"
                     android:layout_height="58px"
-                    android:scaleType="fitCenter" android:src="@drawable/icon_search"/>
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/icon_search"
+                    android:visibility="gone"/>
         </LinearLayout>
     </LinearLayout>
     <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="100px" android:layout_below="@+id/rlTitlebar"
-            android:background="@color/adex_navvarcolor" android:id="@+id/rlSearch">
+            android:background="@color/adex_navvarcolor" android:id="@+id/rlSearch" android:visibility="gone">
         <EditText
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"

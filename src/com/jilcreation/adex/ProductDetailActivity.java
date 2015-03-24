@@ -8,10 +8,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.jilcreation.model.STDealInfo;
 import com.jilcreation.model.modelmanage.SQLiteDBHelper;
+import com.jilcreation.server.ServerManager;
+import com.jilcreation.server.http.AsyncHttpResponseHandler;
 import com.jilcreation.ui.SmartImageView.SmartImageView;
 
 public class ProductDetailActivity extends SuperActivity implements View.OnClickListener {
     STDealInfo mDealInfo = new STDealInfo();
+    private long startTime = 0;
 
     protected SmartImageView imagePhoto;
     protected TextView textBrand;
@@ -22,8 +25,20 @@ public class ProductDetailActivity extends SuperActivity implements View.OnClick
     protected TextView textDetail;
     protected RelativeLayout rlBack;
     protected ImageView imageFavorited;
+    protected ImageView imageBack;
 
-    SQLiteDBHelper m_db = null;
+    private SQLiteDBHelper m_db = null;
+    private AppPreferences appPreferences;
+    private AsyncHttpResponseHandler handler = new AsyncHttpResponseHandler() {
+        @Override
+        public void onSuccess(String content) {
+            super.onSuccess(content);
+        }
+        @Override
+        public void onFailure(Throwable error, String content) {
+            super.onFailure(error, content);
+        }
+    };
     /**
      * Called when the activity is first created.
      */
@@ -32,7 +47,9 @@ public class ProductDetailActivity extends SuperActivity implements View.OnClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_productdetail);
 
+        startTime = System.currentTimeMillis();
         m_db = new SQLiteDBHelper(this);
+        appPreferences = new AppPreferences(this);
 
         mDealInfo = getIntent().getParcelableExtra("PRODUCT");
         if (mDealInfo == null) {
@@ -42,6 +59,8 @@ public class ProductDetailActivity extends SuperActivity implements View.OnClick
 
     @Override
     public void initialize() {
+        imageBack = (ImageView) findViewById(R.id.imageBack);
+        imageBack.setOnClickListener(this);
         imagePhoto = (SmartImageView) findViewById(R.id.imageProduct);
         imagePhoto.setImageUrl(mDealInfo.imageUrl);
         textBrand = (TextView) findViewById(R.id.textBrand);
@@ -80,8 +99,19 @@ public class ProductDetailActivity extends SuperActivity implements View.OnClick
     }
 
     @Override
+    public void onStop() {
+        super.onStop();
+
+        long duration = System.currentTimeMillis() - startTime;
+        ServerManager.updateDuration( handler, appPreferences.getUserId(), mDealInfo.dealId, duration);
+    }
+
+    @Override
     public void onClick(View v) {
         if (v == rlBack) {
+            finish();
+        }
+        else if ( v == imageBack ) {
             finish();
         }
         else if (v == imageFavorited) {

@@ -7,6 +7,12 @@
 
     <uses-sdk android:minSdkVersion="16" android:targetSdkVersion="19"/>
 
+    <!-- Needed permissions in order to scan for beacons. -->
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <!-- Declaration that this app is usable on phones with Bluetooth Low Energy. -->
+    <uses-feature android:name="android.hardware.bluetooth_le" android:required="true"/>
+
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.GET_TASKS"/>
     <uses-permission android:name="android.permission.CAMERA"/>
@@ -85,6 +91,13 @@
                   android:windowSoftInputMode="stateHidden">
         </activity>
 
+        <activity android:name=".ActivitiesActivity"
+                  android:theme="@android:style/Theme.NoTitleBar"
+                  android:label="@string/app_name"
+                  android:screenOrientation="portrait"
+                  android:windowSoftInputMode="stateHidden">
+        </activity>
+
         <activity android:name=".PlanActivity"
                   android:theme="@android:style/Theme.NoTitleBar"
                   android:label="@string/app_name"
@@ -93,6 +106,13 @@
         </activity>
 
         <activity android:name=".AllDealsActivity"
+                  android:theme="@android:style/Theme.NoTitleBar"
+                  android:screenOrientation="portrait"
+                  android:label="@string/app_name"
+                  android:windowSoftInputMode="stateHidden">
+        </activity>
+
+        <activity android:name=".NearbyActivity"
                   android:theme="@android:style/Theme.NoTitleBar"
                   android:screenOrientation="portrait"
                   android:label="@string/app_name"
@@ -151,6 +171,11 @@
         <meta-data
             android:name="com.crashlytics.ApiKey"
             android:value="b85625fea93221fdd4bdb255bc4e74c5697c6c4e" />
+
+        <!-- Estimote service responsible for scanning beacons. -->
+        <service android:name="com.estimote.sdk.service.BeaconService"
+                 android:exported="false"/>
+
     </application>
 
 </manifest>

@@ -87,7 +87,10 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     }
 
     private void onEvent() {
-        ;
+        Intent intent = new Intent(getActivity(), ActivitiesActivity.class);
+        intent.putExtra(GlobalFunc.ANIM_DIRECTION(), GlobalFunc.ANIM_COVER_FROM_LEFT());
+        getActivity().getIntent().putExtra(GlobalFunc.ANIM_DIRECTION(), GlobalFunc.ANIM_COVER_FROM_RIGHT());
+        startActivity(intent);
     }
 
     private void onSchedule() {

@@ -4,4 +4,12 @@
     <string name="app_name">Adex</string>
     <string name="exit_app">Please press back key again.</string>
 
+    <integer-array name="majorlist">
+        <item>50461</item>
+        <item>39187</item>
+        <item>41783</item>
+        <item>61610</item>
+        <item>42296</item>
+    </integer-array>
+
 </resources>

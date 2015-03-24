@@ -118,7 +118,6 @@ public class MainMenuActivity extends NavigationLiveo implements NavigationLiveo
             intent.putExtra(GlobalFunc.ANIM_DIRECTION(), GlobalFunc.ANIM_COVER_FROM_LEFT());
             MainMenuActivity.this.getIntent().putExtra(GlobalFunc.ANIM_DIRECTION(), GlobalFunc.ANIM_COVER_FROM_RIGHT());
             startActivity(intent);
-            finish();
         }
     }
 

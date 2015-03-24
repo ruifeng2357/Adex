@@ -5,7 +5,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import com.jilcreation.server.ServerManager;
+import com.jilcreation.server.http.AsyncHttpResponseHandler;
 import com.jilcreation.utils.GlobalFunc;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 public class SettingActivity extends SuperActivity implements View.OnClickListener {
     private final int MENUITEM_COUNT = 4;
@@ -99,6 +103,15 @@ public class SettingActivity extends SuperActivity implements View.OnClickListen
             appPreferences.setFirstRun(false);
             appPreferences.setSettingVal(curSettingVal);
 
+//            int a, b, c, d;
+//            a = (curSettingVal >> 0) & 1;
+//            b = (curSettingVal >> 1) & 1;
+//            c = (curSettingVal >> 2) & 1;
+//            d = (curSettingVal >> 3) & 1;
+//
+//            startProgress();
+//            ServerManager.updatePref(handlerUpdatePref, appPreferences.getUserId(), a, b, c, d);
+
             Intent intent = new Intent(SettingActivity.this, MainMenuActivity.class);
             intent.putExtra(GlobalFunc.ANIM_DIRECTION(), GlobalFunc.ANIM_COVER_FROM_RIGHT());
             SettingActivity.this.getIntent().putExtra(GlobalFunc.ANIM_DIRECTION(), GlobalFunc.ANIM_COVER_FROM_LEFT());
@@ -142,4 +155,27 @@ public class SettingActivity extends SuperActivity implements View.OnClickListen
             rlItem[3].setBackground(null);
         }
     }
+
+    private AsyncHttpResponseHandler handlerUpdatePref = new AsyncHttpResponseHandler()
+    {
+        @Override
+        public void onSuccess(String content) {
+            super.onSuccess(content);    //To change body of overridden methods use File | Settings | File Templates.
+
+            try {
+                Intent intent = new Intent(SettingActivity.this, MainMenuActivity.class);
+                intent.putExtra(GlobalFunc.ANIM_DIRECTION(), GlobalFunc.ANIM_COVER_FROM_RIGHT());
+                SettingActivity.this.getIntent().putExtra(GlobalFunc.ANIM_DIRECTION(), GlobalFunc.ANIM_COVER_FROM_LEFT());
+                startActivity(intent);
+                finish();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+
+        @Override
+        public void onFailure(Throwable error, String content) {
+            super.onFailure(error, content);    //To change body of overridden methods use File | Settings | File Templates.
+        }
+    };
 }

@@ -1,41 +1,94 @@
 package com.jilcreation.adex;
 
+import android.app.Activity;
+import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.RemoteException;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.*;
+import com.estimote.sdk.Beacon;
+import com.estimote.sdk.BeaconManager;
+import com.estimote.sdk.Region;
+import com.jilcreation.define.AdexConstans;
 import com.jilcreation.model.STDealInfo;
 import com.jilcreation.model.modelmanage.SQLiteDBHelper;
-import com.jilcreation.server.ServerManager;
-import com.jilcreation.server.http.AsyncHttpResponseHandler;
 import com.jilcreation.ui.SmartImageView.SmartImageView;
 import com.jilcreation.utils.GlobalFunc;
 import com.jilcreation.utils.ResolutionSet;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import java.util.ArrayList;
+import java.util.List;
 
-public class AllDealsActivity extends SuperActivity implements View.OnClickListener {
+public class NearbyActivity extends SuperActivity implements View.OnClickListener {
+    private static final int REQUEST_ENABLE_BT = 1234;
+    private static final Region ALL_ESTIMOTE_BEACONS_REGION = new Region("rid", null, null, null);
+    private static final String TAG = "BLE Module";
+
     protected RelativeLayout rlBack;
     protected ImageView imageBack;
     protected LinearLayout llContent;
     protected LinearLayout llSearch;
     protected EditText editSearch;
-    protected TextView textNearby;
+    protected TextView textAllDeals;
 
     ArrayList<STDealInfo> arrDealInfos = new ArrayList<STDealInfo>();
+    ArrayList<STDealInfo> arrCurrDeals = new ArrayList<STDealInfo>();
 
     SQLiteDBHelper m_db = null;
+
+    private BeaconManager beaconManager;
     /**
      * Called when the activity is first created.
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_alldeal);
+        setContentView(R.layout.activity_nearby);
 
-        m_db = new SQLiteDBHelper(AllDealsActivity.this);
+        arrDealInfos = getIntent().getParcelableArrayListExtra("DEALLIST");
+
+        m_db = new SQLiteDBHelper(this);
+        beaconManager = new BeaconManager(this);
+        beaconManager.setRangingListener(new BeaconManager.RangingListener() {
+            @Override
+            public void onBeaconsDiscovered(Region region, final List<Beacon> beacons) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ArrayList<STDealInfo> arrDeals = new ArrayList<STDealInfo>();
+                        arrCurrDeals = new ArrayList<STDealInfo>();
+                        if (beacons.size() > 0) {
+                            for ( int i = 0; i < beacons.size(); i++ ) {
+                                Beacon beacon = beacons.get(i);
+                                if ( beacon.getProximityUUID().toLowerCase().equals(AdexConstans.BEACON_UUID.toLowerCase()) ) {
+                                    boolean bIsAdexBeacon = false;
+                                    for (int j = 0; j < AdexConstans.BEACON_MAJOR.length; j++) {
+                                        if ( AdexConstans.BEACON_MAJOR[j] == beacon.getMajor() ) {
+                                            bIsAdexBeacon = true;
+                                            break;
+                                        }
+                                    }
+
+                                    if (bIsAdexBeacon) {
+                                        for (int k = 0; k < arrDealInfos.size(); k++) {
+                                            if (arrDealInfos.get(k).merchantId == beacon.getMinor()) {
+                                                arrDeals.add(arrDealInfos.get(k));
+                                                break;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                            arrCurrDeals = arrDeals;
+                            showDeals(arrDeals);
+                        }
+                    }
+                });
+            }
+        });
     }
 
     @Override
@@ -43,8 +96,8 @@ public class AllDealsActivity extends SuperActivity implements View.OnClickListe
         rlBack = (RelativeLayout) findViewById(R.id.rlBack);
         rlBack.setOnClickListener(this);
 
-        textNearby = (TextView) findViewById(R.id.textNearby);
-        textNearby.setOnClickListener(this);
+        textAllDeals = (TextView) findViewById(R.id.textAllDeals);
+        textAllDeals.setOnClickListener(this);
         editSearch = (EditText) findViewById(R.id.editSearch);
 
         llContent = (LinearLayout) findViewById(R.id.llContent);
@@ -63,14 +116,65 @@ public class AllDealsActivity extends SuperActivity implements View.OnClickListe
     @Override
     public void onStart() {
         super.onStart();
+
+        if (!beaconManager.hasBluetooth()) {
+            Toast.makeText(this, "Device does not have Bluetooth Low Energy", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        if (!beaconManager.isBluetoothEnabled()) {
+            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+        } else {
+            connectToService();
+        }
+    }
+
+    @Override
+    public void onStop() {
+        try {
+            beaconManager.stopRanging(ALL_ESTIMOTE_BEACONS_REGION);
+        } catch (RemoteException e) {}
+
+        super.onStop();
     }
 
     @Override
     public void onResume() {
         super.onResume();
+    }
 
-        startProgress();
-        ServerManager.getAllDeals(handlerAllDeals);
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        beaconManager.disconnect();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_ENABLE_BT) {
+            if (resultCode == Activity.RESULT_OK) {
+                connectToService();
+            } else {
+                Toast.makeText(this, "Bluetooth not enabled", Toast.LENGTH_LONG).show();
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void connectToService() {
+        beaconManager.connect(new BeaconManager.ServiceReadyCallback() {
+            @Override
+            public void onServiceReady() {
+                try {
+                    beaconManager.startRanging(ALL_ESTIMOTE_BEACONS_REGION);
+                } catch (RemoteException e) {
+                    Toast.makeText(NearbyActivity.this, "Cannot start ranging, something terrible happened", Toast.LENGTH_LONG).show();
+                    Log.e(TAG, "Cannot start ranging", e);
+                }
+            }
+        });
     }
 
     @Override
@@ -82,25 +186,24 @@ public class AllDealsActivity extends SuperActivity implements View.OnClickListe
             finish();
         }
         else if ( v == llSearch ) {
-            String szSearch = editSearch.getText().toString().toLowerCase();
-            ArrayList<STDealInfo> arrayList = new ArrayList<STDealInfo>();
-
-            if (szSearch.length() == 0) {
-                arrayList = arrDealInfos;
-            }
-            else {
-                for ( int i = 0; i < arrDealInfos.size(); i++ ) {
-                    if (arrDealInfos.get(i).productName.toLowerCase().contains(szSearch)) {
-                        arrayList.add(arrDealInfos.get(i));
-                    }
-                }
-            }
-
-            showDeals(arrayList);
+//            String szSearch = editSearch.getText().toString().toLowerCase();
+//            ArrayList<STDealInfo> arrayList = new ArrayList<STDealInfo>();
+//
+//            if (szSearch.length() == 0) {
+//                arrayList = arrDealInfos;
+//            }
+//            else {
+//                for ( int i = 0; i < arrDealInfos.size(); i++ ) {
+//                    if (arrDealInfos.get(i).productName.toLowerCase().contains(szSearch)) {
+//                        arrayList.add(arrDealInfos.get(i));
+//                    }
+//                }
+//            }
+//
+//            showDeals(arrayList);
         }
-        else if ( textNearby == v ) {
-            Intent intent = new Intent(this, NearbyActivity.class);
-            intent.putExtra("DEALLIST", arrDealInfos);
+        else if ( textAllDeals == v ) {
+            Intent intent = new Intent(this, AllDealsActivity.class);
             intent.putExtra(GlobalFunc.ANIM_DIRECTION(), GlobalFunc.ANIM_COVER_FROM_RIGHT());
             this.getIntent().putExtra(GlobalFunc.ANIM_DIRECTION(), GlobalFunc.ANIM_COVER_FROM_LEFT());
             startActivity(intent);
@@ -108,49 +211,8 @@ public class AllDealsActivity extends SuperActivity implements View.OnClickListe
         }
     }
 
-    private AsyncHttpResponseHandler handlerAllDeals = new AsyncHttpResponseHandler()
-    {
-        @Override
-        public void onSuccess(String content) {
-            super.onSuccess(content);    //To change body of overridden methods use File | Settings | File Templates.
-            stopProgress();
-
-            arrDealInfos.clear();
-
-            try {
-                JSONArray jsonArray = new JSONArray(content);
-                if (jsonArray == null) {
-                    return;
-                } else {
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject object = jsonArray.getJSONObject(i);
-
-                        STDealInfo dealInfo = new STDealInfo();
-                        dealInfo = STDealInfo.decodeFromJSON(object);
-
-                        arrDealInfos.add(dealInfo);
-                        m_db.insert(dealInfo.dealId, dealInfo.merchantId, dealInfo.productBrand, dealInfo.productName, dealInfo.imageUrl, 0, 0);
-                    }
-
-                    ArrayList<STDealInfo> arrList = arrDealInfos;
-                    showDeals(arrList);
-                }
-
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        }
-
-        @Override
-        public void onFailure(Throwable error, String content) {
-            super.onFailure(error, content);    //To change body of overridden methods use File | Settings | File Templates.
-            stopProgress();
-        }
-    };
-
     private void showDeals(ArrayList<STDealInfo> arrList) {
         llContent.removeAllViews();
-        GlobalFunc.hideKeyboard(this);
 
         int nCount = arrList.size();
 
@@ -209,10 +271,10 @@ public class AllDealsActivity extends SuperActivity implements View.OnClickListe
                     public void onClick(View v) {
                         STDealInfo stDealInfo = (STDealInfo) v.getTag();
                         m_db.setTapped(stDealInfo.dealId, 1);
-                        Intent intent = new Intent(AllDealsActivity.this, ProductDetailActivity.class);
+                        Intent intent = new Intent(NearbyActivity.this, ProductDetailActivity.class);
                         intent.putExtra("PRODUCT", stDealInfo);
                         intent.putExtra(GlobalFunc.ANIM_DIRECTION(), GlobalFunc.ANIM_COVER_FROM_RIGHT());
-                        AllDealsActivity.this.getIntent().putExtra(GlobalFunc.ANIM_DIRECTION(), GlobalFunc.ANIM_COVER_FROM_LEFT());
+                        NearbyActivity.this.getIntent().putExtra(GlobalFunc.ANIM_DIRECTION(), GlobalFunc.ANIM_COVER_FROM_LEFT());
                         startActivity(intent);
                     }
                 });
@@ -255,10 +317,10 @@ public class AllDealsActivity extends SuperActivity implements View.OnClickListe
                     public void onClick(View v) {
                         STDealInfo stDealInfo = (STDealInfo) v.getTag();
                         m_db.setTapped(stDealInfo.dealId, 1);
-                        Intent intent = new Intent(AllDealsActivity.this, ProductDetailActivity.class);
+                        Intent intent = new Intent(NearbyActivity.this, ProductDetailActivity.class);
                         intent.putExtra("PRODUCT", stDealInfo);
                         intent.putExtra(GlobalFunc.ANIM_DIRECTION(), GlobalFunc.ANIM_COVER_FROM_RIGHT());
-                        AllDealsActivity.this.getIntent().putExtra(GlobalFunc.ANIM_DIRECTION(), GlobalFunc.ANIM_COVER_FROM_LEFT());
+                        NearbyActivity.this.getIntent().putExtra(GlobalFunc.ANIM_DIRECTION(), GlobalFunc.ANIM_COVER_FROM_LEFT());
                         startActivity(intent);
                     }
                 });

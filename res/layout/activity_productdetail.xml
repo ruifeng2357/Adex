@@ -9,12 +9,15 @@
             android:layout_width="fill_parent" android:id="@+id/rlNavbar"
             android:layout_height="140px" android:background="@color/adex_navvarcolor">
 
-        <ImageView
-                android:layout_width="86px"
-                android:layout_height="68px"
-                android:id="@+id/imageMenu" android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true" android:layout_marginLeft="30px"
-                android:scaleType="fitCenter" android:src="@drawable/icon_menutab"/>
+        <ImageView android:layout_width="64px" android:layout_height="64px" android:id="@+id/imageBack"
+                   android:layout_centerVertical="true" android:layout_marginLeft="30px" android:src="@drawable/icon_back"
+                   android:scaleType="fitCenter"/>
+        <!--<ImageView-->
+                <!--android:layout_width="86px"-->
+                <!--android:layout_height="68px"-->
+                <!--android:id="@+id/imageMenu" android:layout_alignParentLeft="true"-->
+                <!--android:layout_centerVertical="true" android:layout_marginLeft="30px"-->
+                <!--android:scaleType="fitCenter" android:src="@drawable/icon_menutab"/>-->
 
     </RelativeLayout>
 
@@ -88,10 +91,10 @@
                 android:id="@+id/rlBack">
             <ImageView
                     android:layout_width="40px"
-                    android:layout_height="fill_parent" android:id="@+id/imageBack"
+                    android:layout_height="fill_parent" android:id="@+id/imageBottomBack"
                     android:src="@drawable/icon_return" android:scaleType="fitCenter" />
             <TextView android:layout_width="120px" android:layout_height="fill_parent" android:text="BACK"
-                      android:textColor="@color/adex_navvarcolor" android:layout_toRightOf="@+id/imageBack"
+                      android:textColor="@color/adex_navvarcolor" android:layout_toRightOf="@+id/imageBottomBack"
                       android:gravity="left|center_vertical" android:textSize="40px" android:layout_marginLeft="20px"  />
         </RelativeLayout>
     </RelativeLayout>
