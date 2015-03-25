@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NearbyActivity extends SuperActivity implements View.OnClickListener {
+    private static final int BEACONCON_TIMEOUT = 10 * 1000;
     private static final int REQUEST_ENABLE_BT = 1234;
     private static final Region ALL_ESTIMOTE_BEACONS_REGION = new Region("rid", null, null, null);
     private static final String TAG = "BLE Module";
@@ -34,11 +35,22 @@ public class NearbyActivity extends SuperActivity implements View.OnClickListene
     protected TextView textAllDeals;
 
     ArrayList<STDealInfo> arrDealInfos = new ArrayList<STDealInfo>();
-    ArrayList<STDealInfo> arrCurrDeals = new ArrayList<STDealInfo>();
 
     SQLiteDBHelper m_db = null;
 
     private BeaconManager beaconManager;
+
+    private ArrayList<DetectedBeacon> detectedBeacons = new ArrayList<DetectedBeacon>();
+    private class DetectedBeacon {
+        Beacon _beacon;
+        long _lastDetectTime;
+
+        public DetectedBeacon() {
+            _beacon = null;
+            _lastDetectTime = 0;
+        }
+    }
+
     /**
      * Called when the activity is first created.
      */
@@ -57,34 +69,64 @@ public class NearbyActivity extends SuperActivity implements View.OnClickListene
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        ArrayList<STDealInfo> arrDeals = new ArrayList<STDealInfo>();
-                        arrCurrDeals = new ArrayList<STDealInfo>();
+                        ArrayList<STDealInfo> arrDispDeals = new ArrayList<STDealInfo>();
+
+                        /*
+                        * remove timeout beacons
+                         */
+                        long nCurrentTime = System.currentTimeMillis();
+                        ArrayList<DetectedBeacon> tempBeacons = new ArrayList<DetectedBeacon>();
+                        for (int i = 0; i < detectedBeacons.size(); i++) {
+                            if ( ( nCurrentTime - detectedBeacons.get(i)._lastDetectTime ) < BEACONCON_TIMEOUT )
+                                tempBeacons.add(detectedBeacons.get(i));
+                        }
+                        detectedBeacons = tempBeacons;
+
                         if (beacons.size() > 0) {
                             for ( int i = 0; i < beacons.size(); i++ ) {
                                 Beacon beacon = beacons.get(i);
                                 if ( beacon.getProximityUUID().toLowerCase().equals(AdexConstans.BEACON_UUID.toLowerCase()) ) {
-                                    boolean bIsAdexBeacon = false;
+                                    boolean bIsOurBeacon = false;
                                     for (int j = 0; j < AdexConstans.BEACON_MAJOR.length; j++) {
                                         if ( AdexConstans.BEACON_MAJOR[j] == beacon.getMajor() ) {
-                                            bIsAdexBeacon = true;
+                                            bIsOurBeacon = true;
                                             break;
                                         }
                                     }
 
-                                    if (bIsAdexBeacon) {
-                                        for (int k = 0; k < arrDealInfos.size(); k++) {
-                                            if (arrDealInfos.get(k).merchantId == beacon.getMinor()) {
-                                                arrDeals.add(arrDealInfos.get(k));
+                                    if (bIsOurBeacon) {
+                                        boolean isAddedBeacon  = false;
+                                        int nPos = 0;
+                                        for ( nPos = 0; nPos < detectedBeacons.size(); nPos++ ) {
+                                            if (detectedBeacons.get(nPos)._beacon.getMinor() == beacon.getMinor()) {
+                                                isAddedBeacon = true;
+                                                detectedBeacons.get(nPos)._lastDetectTime = System.currentTimeMillis();
                                                 break;
                                             }
+                                        }
+
+                                        if (isAddedBeacon == false) {
+                                            DetectedBeacon newBeacon = new DetectedBeacon();
+                                            newBeacon._beacon = beacon;
+                                            newBeacon._lastDetectTime = System.currentTimeMillis();
+
+                                            detectedBeacons.add(newBeacon);
                                         }
                                     }
                                 }
                             }
-
-                            arrCurrDeals = arrDeals;
-                            showDeals(arrDeals);
                         }
+
+                        for (int i = 0; i < detectedBeacons.size(); i++ ) {
+                            for (int j = 0; j < arrDealInfos.size(); j++) {
+                                if ( detectedBeacons.get(i)._beacon.getMinor() == arrDealInfos.get(j).merchantId) {
+                                    arrDispDeals.add(arrDealInfos.get(j));
+                                    break;
+                                }
+                            }
+                        }
+
+                        showDeals(arrDispDeals);
                     }
                 });
             }
