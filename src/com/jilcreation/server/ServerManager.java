@@ -108,7 +108,7 @@ public class ServerManager {
     }
 
     public static void updatePref(AsyncHttpResponseHandler handler, long userId, int a, int b, int c, int d) {
-        String url = APIManager.CMD_SELECTDEAL + "?uid=" + userId + "&a=" + a + "&b=" + b + "&c=" + c + "&d=" + d;
+        String url = APIManager.CMD_UPDATEPREF + "?uid=" + userId + "&a=" + a + "&b=" + b + "&c=" + c + "&d=" + d;
 
         try
         {
@@ -127,6 +127,24 @@ public class ServerManager {
 
     public static void updateDuration(AsyncHttpResponseHandler handler, long userId, long dealId, long duration) {
         String url = APIManager.CMD_UPDATEDURATION + "?uid=" + userId + "&did=" + dealId + "&duration=" + duration;
+
+        try
+        {
+            AsyncHttpClient client = new AsyncHttpClient();
+            client.setTimeout(APIManager.connectTimeout);
+            client.post(url, null, handler);
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+
+            if (handler != null)
+                handler.onFailure(null, ex.getMessage());
+        }
+    }
+
+    public static void searchBy(AsyncHttpResponseHandler handler, String query) {
+        String url = APIManager.CMD_SEARCHBY + "?x=" + query;
 
         try
         {

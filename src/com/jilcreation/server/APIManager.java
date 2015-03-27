@@ -2,7 +2,7 @@ package com.jilcreation.server;
 
 public class APIManager {
 	// Service Address
-    public static String API_PREFIX = "http://jilcreation.com/phpdb132";
+    public static String API_PREFIX = "http://128.199.67.219/phpwebservices";
 
     // Connection Info
     public static int connectTimeout = 4 * 1000; // 5 Seconds
@@ -19,4 +19,5 @@ public class APIManager {
     public static String CMD_ADDUSER = API_PREFIX + "/adduserservice.php?x=0";
     public static String CMD_UPDATEPREF = API_PREFIX + "/updateprefservice.php";
     public static String CMD_UPDATEDURATION = API_PREFIX + "/updatedurationservice.php";
+    public static String CMD_SEARCHBY = API_PREFIX + "/searchbykeywordservice.php";
 }

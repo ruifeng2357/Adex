@@ -83,20 +83,9 @@ public class AllDealsActivity extends SuperActivity implements View.OnClickListe
         }
         else if ( v == llSearch ) {
             String szSearch = editSearch.getText().toString().toLowerCase();
-            ArrayList<STDealInfo> arrayList = new ArrayList<STDealInfo>();
 
-            if (szSearch.length() == 0) {
-                arrayList = arrDealInfos;
-            }
-            else {
-                for ( int i = 0; i < arrDealInfos.size(); i++ ) {
-                    if (arrDealInfos.get(i).productName.toLowerCase().contains(szSearch)) {
-                        arrayList.add(arrDealInfos.get(i));
-                    }
-                }
-            }
-
-            showDeals(arrayList);
+            startProgress();
+            ServerManager.searchBy(handlerSearchBy, szSearch);
         }
         else if ( textNearby == v ) {
             Intent intent = new Intent(this, NearbyActivity.class);
@@ -134,6 +123,45 @@ public class AllDealsActivity extends SuperActivity implements View.OnClickListe
 
                     ArrayList<STDealInfo> arrList = arrDealInfos;
                     showDeals(arrList);
+                }
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+
+        @Override
+        public void onFailure(Throwable error, String content) {
+            super.onFailure(error, content);    //To change body of overridden methods use File | Settings | File Templates.
+            stopProgress();
+        }
+    };
+
+    private AsyncHttpResponseHandler handlerSearchBy = new AsyncHttpResponseHandler()
+    {
+        @Override
+        public void onSuccess(String content) {
+            super.onSuccess(content);    //To change body of overridden methods use File | Settings | File Templates.
+            stopProgress();
+
+            ArrayList<STDealInfo> arrayList = new ArrayList<STDealInfo>();
+            try {
+                JSONArray jsonArray = new JSONArray(content);
+                if (jsonArray == null) {
+                    return;
+                } else {
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject object = jsonArray.getJSONObject(i);
+
+                        long dealId = object.getLong("deal_id");
+                        for (int j = 0; j < arrDealInfos.size(); j++) {
+                            if ( dealId == arrDealInfos.get(j).dealId ) {
+                                arrayList.add(arrDealInfos.get(j));
+                                break;
+                            }
+                        }
+                    }
+                    showDeals(arrayList);
                 }
 
             } catch (Exception ex) {

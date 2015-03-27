@@ -24,7 +24,11 @@ import java.util.List;
 public class NearbyActivity extends SuperActivity implements View.OnClickListener {
     private static final int BEACONCON_TIMEOUT = 10 * 1000;
     private static final int REQUEST_ENABLE_BT = 1234;
-    private static final Region ALL_ESTIMOTE_BEACONS_REGION = new Region("rid", null, null, null);
+
+    private static final String BEACON_UUID = "236C55B3-0D4A-4976-A7D7-C8B9DA24894D";
+    private static final int BEACON_MAJOR = 8;
+
+    private static final Region ALL_ESTIMOTE_BEACONS_REGION = new Region("rid", BEACON_UUID, BEACON_MAJOR, null);
     private static final String TAG = "BLE Module";
 
     protected RelativeLayout rlBack;
@@ -65,12 +69,13 @@ public class NearbyActivity extends SuperActivity implements View.OnClickListene
         beaconManager = new BeaconManager(this);
         beaconManager.setRangingListener(new BeaconManager.RangingListener() {
             @Override
-            public void onBeaconsDiscovered(Region region, final List<Beacon> beacons) {
+            public void onBeaconsDiscovered(final Region region, final List<Beacon> beacons) {
+                Region temp = region;
+                String str = temp.getProximityUUID();
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         ArrayList<STDealInfo> arrDispDeals = new ArrayList<STDealInfo>();
-
                         /*
                         * remove timeout beacons
                          */
@@ -85,34 +90,23 @@ public class NearbyActivity extends SuperActivity implements View.OnClickListene
                         if (beacons.size() > 0) {
                             for ( int i = 0; i < beacons.size(); i++ ) {
                                 Beacon beacon = beacons.get(i);
-                                if ( beacon.getProximityUUID().toLowerCase().equals(AdexConstans.BEACON_UUID.toLowerCase()) ) {
-                                    boolean bIsOurBeacon = false;
-                                    for (int j = 0; j < AdexConstans.BEACON_MAJOR.length; j++) {
-                                        if ( AdexConstans.BEACON_MAJOR[j] == beacon.getMajor() ) {
-                                            bIsOurBeacon = true;
-                                            break;
-                                        }
+
+                                int nPos = 0;
+                                boolean isAddedBeacon  = false;
+                                for ( nPos = 0; nPos < detectedBeacons.size(); nPos++ ) {
+                                    if (detectedBeacons.get(nPos)._beacon.getMinor() == beacon.getMinor()) {
+                                        isAddedBeacon = true;
+                                        detectedBeacons.get(nPos)._lastDetectTime = System.currentTimeMillis();
+                                        break;
                                     }
+                                }
 
-                                    if (bIsOurBeacon) {
-                                        boolean isAddedBeacon  = false;
-                                        int nPos = 0;
-                                        for ( nPos = 0; nPos < detectedBeacons.size(); nPos++ ) {
-                                            if (detectedBeacons.get(nPos)._beacon.getMinor() == beacon.getMinor()) {
-                                                isAddedBeacon = true;
-                                                detectedBeacons.get(nPos)._lastDetectTime = System.currentTimeMillis();
-                                                break;
-                                            }
-                                        }
+                                if (isAddedBeacon == false) {
+                                    DetectedBeacon newBeacon = new DetectedBeacon();
+                                    newBeacon._beacon = beacon;
+                                    newBeacon._lastDetectTime = System.currentTimeMillis();
 
-                                        if (isAddedBeacon == false) {
-                                            DetectedBeacon newBeacon = new DetectedBeacon();
-                                            newBeacon._beacon = beacon;
-                                            newBeacon._lastDetectTime = System.currentTimeMillis();
-
-                                            detectedBeacons.add(newBeacon);
-                                        }
-                                    }
+                                    detectedBeacons.add(newBeacon);
                                 }
                             }
                         }
