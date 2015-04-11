@@ -42,12 +42,20 @@
             android:layout_below="@+id/rlProductPhoto" android:background="@color/adex_navvarcolor"
             android:id="@+id/rlBrand">
 
-        <TextView android:layout_width="360px" android:layout_height="fill_parent"
-                android:id="@+id/textBrand" style="@style/adex_productnamebrand" android:text="Exhibitor X" />
+        <TextView android:layout_width="360px"
+                  android:layout_height="fill_parent"
+                android:id="@+id/textMerchantName"
+                style="@style/adex_productnamebrand"
+                android:text="Exhibitor X"
+                android:gravity="left|center_vertical"/>
 
-        <TextView android:layout_width="360px" android:layout_height="fill_parent"
-                  android:id="@+id/textName" android:layout_toRightOf="@+id/textBrand"
-                  style="@style/adex_productnamebrand" android:text="Booth A01" />
+        <TextView android:layout_width="360px"
+                  android:layout_height="fill_parent"
+                  android:id="@+id/textBooth"
+                  android:layout_toRightOf="@+id/textMerchantName"
+                  style="@style/adex_productnamebrand"
+                  android:text="Booth A01"
+                android:gravity="right|center_vertical"/>
 
     </RelativeLayout>
 
@@ -56,15 +64,19 @@
             android:id="@+id/rlProductInfo">
 
         <TextView android:layout_width="460px" android:layout_height="60px"
-                android:layout_marginLeft="60px" android:id="@+id/textCategory"
+                android:layout_marginLeft="60px" android:id="@+id/textBrand"
                 style="@style/adex_productcategory" android:layout_marginTop="30px" />
 
         <TextView android:layout_width="460px" android:layout_height="60px"
-                  android:layout_marginLeft="60px" android:id="@+id/textModel" android:layout_below="@+id/textCategory"
+                  android:layout_marginLeft="60px" android:id="@+id/textProductName"
+                  android:layout_below="@+id/textBrand"
                   style="@style/adex_productcategory" />
 
-        <TextView android:layout_width="460px" android:layout_height="60px"
-                  android:layout_marginLeft="60px" android:id="@+id/textPrice" android:layout_below="@+id/textModel"
+        <TextView android:layout_width="460px"
+                  android:layout_height="60px"
+                  android:layout_marginLeft="60px"
+                  android:id="@+id/textPrice"
+                  android:layout_below="@+id/textProductName"
                   style="@style/adex_productcategory" />
 
         <TextView android:layout_width="fill_parent" android:layout_height="60px"

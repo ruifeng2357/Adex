@@ -20,12 +20,19 @@
                    android:src="@drawable/icon_back"
                    android:scaleType="fitCenter"/>
 
-        <!--<ImageView-->
-                <!--android:layout_width="86px"-->
-                <!--android:layout_height="68px"-->
-                <!--android:id="@+id/imageMenu" android:layout_alignParentLeft="true"-->
-                <!--android:layout_centerVertical="true" android:layout_marginLeft="30px"-->
-                <!--android:scaleType="fitCenter" android:src="@drawable/icon_menutab"/>-->
+        <ProgressBar android:layout_width="60px"
+                     android:layout_height="60px"
+                     android:layout_marginRight="30px"
+                     android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"/>
+
+        <TextView android:layout_width="fill_parent"
+                  android:layout_height="fill_parent"
+                  android:text="Nearby Deal"
+                  android:gravity="center"
+                  android:textColor="@color/adex_white"
+                  android:textSize="54px"
+                  android:textStyle="bold"/>
 
     </RelativeLayout>
     <LinearLayout
@@ -35,45 +42,40 @@
             android:id="@+id/rlTitlebar"
             android:layout_below="@+id/rlNavbar">
         <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="240px"
-                android:layout_height="fill_parent"
-                android:background="@drawable/rectdealtitle">
+                android:orientation="vertical"
+                android:layout_width="360px"
+                android:layout_height="fill_parent">
 
             <TextView android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:text="All Deals"
-                        android:id="@+id/textAllDeals"
-                        android:textColor="@color/adex_white"
-                        android:gravity="center"
-                        android:textSize="40px"
-                        android:textStyle="bold" />
+                      android:layout_height="80px"
+                      android:text="All Deals"
+                      android:id="@+id/textAllDeals"
+                      android:textColor="@color/adex_gray"
+                      android:gravity="center"
+                      android:textSize="40px"
+                      android:textStyle="bold" />
 
         </LinearLayout>
         <LinearLayout
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:layout_width="360px"
-                android:layout_height="fill_parent" android:background="@drawable/rectdealtitle">
+                android:layout_height="fill_parent">
 
-            <TextView android:layout_width="fill_parent" android:layout_height="fill_parent"
-                      android:text="What's Nearby" android:id="@+id/textNearby" android:textColor="@color/adex_white"
-                      android:gravity="center" android:textSize="40px" android:textStyle="bold" />
+            <TextView android:layout_width="fill_parent"
+                      android:layout_height="80px"
+                      android:text="Nearby Deal"
+                      android:id="@+id/textNearby"
+                      android:textColor="@color/adex_gray"
+                      android:gravity="center"
+                      android:textSize="40px"
+                      android:textStyle="bold" />
 
-        </LinearLayout>
-        <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="fill_parent" android:id="@+id/llSearch"
-                android:layout_height="fill_parent" android:background="@drawable/rectsearch" android:gravity="center"
-                android:visibility="visible">
-            <ProgressBar android:layout_width="wrap_content"
-                         android:layout_height="wrap_content"
-                        android:layout_margin="15px"/>
-            <!--<ImageView-->
-                    <!--android:layout_width="58px"-->
-                    <!--android:layout_height="58px"-->
-                    <!--android:scaleType="fitCenter"-->
-                    <!--android:src="@drawable/icon_search"-->
-                    <!--android:visibility="gone"/>-->
+            <TextView android:layout_width="300px"
+                      android:layout_height="10px"
+                      android:layout_gravity="center"
+                      android:id="@+id/textAllDealSeparate"
+                      android:background="@color/adex_mainmenubackcolor"/>
+
         </LinearLayout>
     </LinearLayout>
     <RelativeLayout

@@ -12,15 +12,14 @@
                 android:layout_centerVertical="true" android:layout_marginLeft="30px" android:src="@drawable/icon_back"
                 android:scaleType="fitCenter"/>
         
-        <TextView android:layout_width="450px" android:layout_height="fill_parent" android:text="EXHIBITOR LIST"
-                android:layout_centerInParent="true" android:textColor="@color/adex_white" android:textSize="48px"
-                android:textStyle="bold"
+        <TextView android:layout_width="450px" android:layout_height="fill_parent" android:text="Programme Schedule"
+                android:layout_centerInParent="true" android:textColor="@color/adex_white" android:textSize="40px"
                 android:gravity="center"/>
 
     </RelativeLayout>
 
     <ScrollView android:layout_width="fill_parent" android:layout_height="fill_parent"
-                android:layout_below="@+id/rlNavbar" >
+                android:layout_below="@+id/rlNavbar">
         <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="fill_parent"

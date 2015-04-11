@@ -45,7 +45,7 @@ public abstract class BaseActivity extends Activity {
                         {
                             Rect r = new Rect();
                             mainLayout.getLocalVisibleRect(r);
-                            ResolutionSet._instance.setResolution(r.width(), r.height(), false);
+                            ResolutionSet._instance.setResolution(r.width(), r.height(), true);
                             ResolutionSet._instance.iterateChild(mainLayout);
                             bInitialized = true;
 

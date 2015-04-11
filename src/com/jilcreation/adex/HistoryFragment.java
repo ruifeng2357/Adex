@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.jilcreation.model.STHisFavInfo;
 import com.jilcreation.model.modelmanage.SQLiteDBHelper;
 import com.jilcreation.ui.SmartImageView.SmartImageView;
+import com.jilcreation.utils.GlobalFunc;
 import com.jilcreation.utils.ResolutionSet;
 
 import java.util.ArrayList;
@@ -75,7 +76,16 @@ public class HistoryFragment extends BaseFragment implements View.OnClickListene
 
             if (stHisFavInfo1 != null) {
                 SmartImageView imageLeft = (SmartImageView)view.findViewById(R.id.imageLeftDeal);
-                imageLeft.setImageUrl(stHisFavInfo1.imgUrl);
+                if (m_db.getLocImgPath(stHisFavInfo1.dealId).length() > 0) {
+                    try {
+                        imageLeft.setImageBitmap(GlobalFunc.getBitmapFromLocalpath(m_db.getLocImgPath(stHisFavInfo1.dealId)));
+                    } catch (Exception ex) {
+                        imageLeft.setImageUrl(stHisFavInfo1.imgUrl);
+                    }
+                } else {
+                    imageLeft.setImageUrl(stHisFavInfo1.imgUrl);
+                    GlobalFunc.saveProductImage(getActivity(), stHisFavInfo1.dealId, stHisFavInfo1.imgUrl);
+                }
                 TextView textBrand = (TextView) view.findViewById(R.id.textLeftBrand);
                 textBrand.setText(stHisFavInfo1.brandName);
                 TextView textName = (TextView) view.findViewById(R.id.textLeftName);
@@ -121,7 +131,16 @@ public class HistoryFragment extends BaseFragment implements View.OnClickListene
             }
             if (stHisFavInfo2 != null) {
                 SmartImageView imageLeft = (SmartImageView)view.findViewById(R.id.imageRightDeal);
-                imageLeft.setImageUrl(stHisFavInfo2.imgUrl);
+                if (m_db.getLocImgPath(stHisFavInfo2.dealId).length() > 0) {
+                    try {
+                        imageLeft.setImageBitmap(GlobalFunc.getBitmapFromLocalpath(m_db.getLocImgPath(stHisFavInfo2.dealId)));
+                    } catch (Exception ex) {
+                        imageLeft.setImageUrl(stHisFavInfo2.imgUrl);
+                    }
+                } else {
+                    imageLeft.setImageUrl(stHisFavInfo2.imgUrl);
+                    GlobalFunc.saveProductImage(getActivity(), stHisFavInfo2.dealId, stHisFavInfo2.imgUrl);
+                }
                 TextView textBrand = (TextView) view.findViewById(R.id.textRightBrand);
                 textBrand.setText(stHisFavInfo2.brandName);
                 TextView textName = (TextView) view.findViewById(R.id.textRightName);

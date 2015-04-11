@@ -10,6 +10,8 @@ import org.json.JSONObject;
 public class STDealInfo implements Parcelable {
     public long dealId;
     public long merchantId;
+    public String merchantName;
+    public String booth;
     public String productBrand;
     public String productName;
     public double price;
@@ -21,6 +23,7 @@ public class STDealInfo implements Parcelable {
     public int totalCount;
     public String lastUpdateBy;
     public String lastUpdateTime;
+    public String locImagePath;
 
     public STDealInfo () {}
 
@@ -38,6 +41,8 @@ public class STDealInfo implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(dealId);
         dest.writeLong(merchantId);
+        dest.writeString(merchantName);
+        dest.writeString(booth);
         dest.writeString(productBrand);
         dest.writeString(productName);
         dest.writeDouble(price);
@@ -49,12 +54,15 @@ public class STDealInfo implements Parcelable {
         dest.writeInt(totalCount);
         dest.writeString(lastUpdateBy);
         dest.writeString(lastUpdateTime);
+        dest.writeString(locImagePath);
     }
 
     private void readFromParcel(Parcel in)
     {
         dealId = in.readLong();
         merchantId = in.readLong();
+        merchantName = in.readString();
+        booth = in.readString();
         productBrand = in.readString();
         productName = in.readString();
         price = in.readDouble();
@@ -66,6 +74,7 @@ public class STDealInfo implements Parcelable {
         totalCount = in.readInt();
         lastUpdateBy = in.readString();
         lastUpdateTime = in.readString();
+        locImagePath = in.readString();
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
@@ -86,6 +95,8 @@ public class STDealInfo implements Parcelable {
 
         try { retData.dealId = jsonObj.getLong("deal_id"); } catch (Exception ex) {}
         try { retData.merchantId = jsonObj.getLong("merchant_id"); } catch (Exception ex) {}
+        try { retData.merchantName = jsonObj.getString("merchant_name"); if (retData.merchantName == null) retData.merchantName = ""; } catch (Exception ex) {}
+        try { retData.booth = jsonObj.getString("booth"); if (retData.booth == null) retData.booth = ""; } catch (Exception ex) {}
         try { retData.productBrand = jsonObj.getString("product_brand"); if (retData.productBrand == null) retData.productBrand = ""; } catch (Exception ex) {}
         try { retData.productName = jsonObj.getString("product_name"); if (retData.productName == null) retData.productName = ""; } catch (Exception ex) {}
         try { retData.price = jsonObj.getDouble("price"); } catch (Exception ex) {}

@@ -3,48 +3,123 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:id="@+id/rlParent" android:background="@color/adex_white">
+              android:id="@+id/rlParent" android:background="@color/adex_navvarcolor">
 
-    <RelativeLayout android:layout_width="fill_parent"
-            android:layout_height="140px" android:background="@color/adex_navvarcolor" android:id="@+id/rlNavbar">
-        
-        <ImageView android:layout_width="64px" android:layout_height="64px" android:id="@+id/imageBack"
-                android:layout_centerVertical="true" android:layout_marginLeft="30px" android:src="@drawable/icon_back"
-                android:scaleType="fitCenter"/>
-        
-        <TextView android:layout_width="450px" android:layout_height="fill_parent" android:text="Programme Schedule"
-                android:layout_centerInParent="true" android:textColor="@color/adex_white" android:textSize="40px"
-                android:gravity="center"/>
+    <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="936px"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:background="@color/adex_mainmenubackcolor"
+            android:id="@+id/rlContent">
+
+        <RelativeLayout android:layout_width="360px"
+                        android:layout_height="312px"
+                android:id="@+id/rlMain"
+                android:background="@drawable/menuitemback"
+                android:gravity="center">
+
+            <TextView android:layout_width="fill_parent"
+                      android:layout_height="fill_parent"
+                    android:text="MAIN STAGE TALKS"
+                    android:gravity="center"
+                    android:textColor="@color/adex_white"
+                    android:textSize="36px"
+                    android:textStyle="bold"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout android:layout_width="360px"
+                        android:layout_height="312px"
+                        android:id="@+id/rlCeremony"
+                        android:layout_alignTop="@+id/rlScan"
+                android:layout_toRightOf="@+id/rlMain">
+
+            <TextView android:layout_width="fill_parent"
+                      android:layout_height="fill_parent"
+                      android:text="POOL ACTIVITIES"
+                      android:gravity="center"
+                      android:textColor="@color/adex_white"
+                      android:textSize="36px"
+                      android:textStyle="bold"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout android:layout_width="360px" android:layout_height="312px"
+                            android:id="@+id/rlShare" android:layout_alignLeft="@+id/rlScan"
+                        android:layout_below="@+id/rlMain">
+
+            <TextView android:layout_width="fill_parent"
+                      android:layout_height="fill_parent"
+                      android:text="PHOTO/VIDEO\nZONE"
+                      android:gravity="center"
+                      android:textColor="@color/adex_white"
+                      android:textSize="36px"
+                      android:textStyle="bold"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout android:layout_width="360px" android:layout_height="312px"
+                        android:id="@+id/rlConference" android:layout_alignLeft="@+id/rlCeremony"
+                        android:layout_below="@+id/rlCeremony" android:background="@drawable/menuitemback">
+
+            <TextView android:layout_width="fill_parent"
+                      android:layout_height="fill_parent"
+                      android:text="TEKDIVE\nCONFERENCE"
+                      android:gravity="center"
+                      android:textColor="@color/adex_white"
+                      android:textSize="36px"
+                      android:textStyle="bold"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout android:layout_width="360px" android:layout_height="312px"
+                        android:id="@+id/rlFlim" android:layout_alignLeft="@+id/rlEvent"
+                        android:layout_below="@+id/rlShare"
+                        android:background="@drawable/menuitemback">
+
+            <TextView android:layout_width="fill_parent"
+                      android:layout_height="fill_parent"
+                      android:text="FILM FESTIVAL"
+                      android:gravity="center"
+                      android:textColor="@color/adex_white"
+                      android:textSize="36px"
+                      android:textStyle="bold"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout android:layout_width="360px" android:layout_height="312px"
+                        android:id="@+id/rlExpo" android:layout_alignLeft="@+id/rlConference"
+                        android:layout_below="@+id/rlConference">
+
+            <ImageView android:layout_width="fill_parent"
+                       android:layout_height="fill_parent"
+                       android:padding="20px"
+                       android:src="@drawable/icon_logo"
+                       android:scaleType="fitCenter"
+                       android:layout_centerInParent="true"/>
+
+        </RelativeLayout>
 
     </RelativeLayout>
-    
-    <LinearLayout android:layout_width="fill_parent" android:layout_height="70px"
-                  android:layout_below="@+id/rlNavbar" android:id="@+id/llMenu" android:orientation="horizontal" >
 
-        <TextView android:layout_width="0px" android:layout_height="fill_parent" android:layout_weight="1"
-                android:textSize="32px" android:text="Main Stage" android:singleLine="true" android:ellipsize="end"
-                android:gravity="center" android:textColor="@color/adex_white" android:background="@drawable/roundleftselframe"
-                android:id="@+id/textMain"/>
+    <TextView android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+            android:layout_above="@+id/rlContent"
+            android:text="Programme Schedule"
+            android:gravity="center"
+            android:textColor="@color/adex_white"
+            android:textStyle="bold"
+            android:textSize="52px"/>
 
-        <TextView android:layout_width="0px" android:layout_height="fill_parent" android:layout_weight="1"
-                  android:textSize="32px" android:text="Photo/Video Share" android:singleLine="true" android:ellipsize="end"
-                  android:gravity="center" android:textColor="@color/adex_programmemenublue" android:background="@drawable/rectdiselframe"
-                  android:id="@+id/textShare"/>
+    <ImageView
+            android:layout_width="86px"
+            android:layout_height="86px"
+            android:id="@+id/imageBack"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:scaleType="fitCenter" android:src="@drawable/icon_back"/>
 
-        <TextView android:layout_width="0px" android:layout_height="fill_parent" android:layout_weight="1"
-                  android:textSize="32px" android:text="Film Festival" android:singleLine="true" android:ellipsize="end"
-                  android:gravity="center" android:textColor="@color/adex_programmemenublue" android:background="@drawable/roundrightdiselframe"
-                  android:id="@+id/textFlim"/>
-
-    </LinearLayout>
-
-    <ScrollView android:layout_width="fill_parent" android:layout_height="fill_parent"
-                android:layout_below="@+id/llMenu" >
-        <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent" android:id="@+id/llContent">
-        </LinearLayout>
-    </ScrollView>
 </RelativeLayout>
 

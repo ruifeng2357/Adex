@@ -1,7 +1,11 @@
 package com.jilcreation.adex;
 
 import android.app.Activity;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.bluetooth.BluetoothAdapter;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.RemoteException;
@@ -14,31 +18,65 @@ import com.estimote.sdk.BeaconManager;
 import com.estimote.sdk.Region;
 import com.jilcreation.define.AdexConstans;
 import com.jilcreation.model.STDealInfo;
+import com.jilcreation.model.STNotification;
 import com.jilcreation.model.modelmanage.SQLiteDBHelper;
+import com.jilcreation.server.ServerManager;
+import com.jilcreation.server.http.AsyncHttpResponseHandler;
 import com.jilcreation.ui.SmartImageView.SmartImageView;
 import com.jilcreation.utils.GlobalFunc;
 import com.jilcreation.utils.ResolutionSet;
+import org.json.JSONArray;
+import org.json.JSONException;
+
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class NearbyActivity extends SuperActivity implements View.OnClickListener {
-    private static final int BEACONCON_TIMEOUT = 10 * 1000;
+    private static final int BEACONCON_TIMEOUT = 5 * 1000;
     private static final int REQUEST_ENABLE_BT = 1234;
 
     private static final String BEACON_UUID = "236C55B3-0D4A-4976-A7D7-C8B9DA24894D";
+//    private static final String BEACON_UUID = "B9407f30-f5f8-466e-aff9-25556b57fe6d";
     private static final int BEACON_MAJOR = 8;
+//    private static final int BEACON_MAJOR = 43089;
 
-    private static final Region ALL_ESTIMOTE_BEACONS_REGION = new Region("rid", BEACON_UUID, BEACON_MAJOR, null);
+    private static final Region ALL_ESTIMOTE_BEACONS_REGION = new Region("", null, null, null);
+    private static final Region[] NOTIFICATION_BEACONS = new Region[] {
+            new Region("1", BEACON_UUID, BEACON_MAJOR, null),
+            new Region("2", BEACON_UUID, 2, null),
+            new Region("3", BEACON_UUID, 3, null),
+            new Region("4", BEACON_UUID, 4, null),
+            new Region("5", BEACON_UUID, 5, 1),
+            new Region("6", BEACON_UUID, 5, 2),
+            new Region("7", BEACON_UUID, 5, 3),
+            new Region("8", BEACON_UUID, 5, 4),
+            new Region("9", BEACON_UUID, 5, 5),
+            new Region("10", BEACON_UUID, 5, 6),
+            new Region("11", BEACON_UUID, 6, null),
+            new Region("12", BEACON_UUID, 7, 1),
+            new Region("13", BEACON_UUID, 7, 2),
+            new Region("14", BEACON_UUID, 7, 3),
+            new Region("15", BEACON_UUID, 7, 4),
+            new Region("16", BEACON_UUID, 7, 5),
+            new Region("17", BEACON_UUID, 7, 6),
+            new Region("18", BEACON_UUID, 7, 7),
+            new Region("19", BEACON_UUID, 7, 8),
+            new Region("20", BEACON_UUID, 7, 9)
+    };
     private static final String TAG = "BLE Module";
 
     protected RelativeLayout rlBack;
     protected ImageView imageBack;
     protected LinearLayout llContent;
-    protected LinearLayout llSearch;
     protected EditText editSearch;
     protected TextView textAllDeals;
 
+    private NotificationManager notificationManager;
+
     ArrayList<STDealInfo> arrDealInfos = new ArrayList<STDealInfo>();
+    ArrayList<STNotification> arrNotification = new ArrayList<STNotification>();
 
     SQLiteDBHelper m_db = null;
 
@@ -63,15 +101,18 @@ public class NearbyActivity extends SuperActivity implements View.OnClickListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nearby);
 
+        arrNotification = ((AdexApplication)getApplication()).getNotificationInfos();
+
         arrDealInfos = getIntent().getParcelableArrayListExtra("DEALLIST");
+
+        notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         m_db = new SQLiteDBHelper(this);
         beaconManager = new BeaconManager(this);
+        beaconManager.setBackgroundScanPeriod(TimeUnit.SECONDS.toMillis(1), 0);
         beaconManager.setRangingListener(new BeaconManager.RangingListener() {
             @Override
             public void onBeaconsDiscovered(final Region region, final List<Beacon> beacons) {
-                Region temp = region;
-                String str = temp.getProximityUUID();
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -82,18 +123,23 @@ public class NearbyActivity extends SuperActivity implements View.OnClickListene
                         long nCurrentTime = System.currentTimeMillis();
                         ArrayList<DetectedBeacon> tempBeacons = new ArrayList<DetectedBeacon>();
                         for (int i = 0; i < detectedBeacons.size(); i++) {
-                            if ( ( nCurrentTime - detectedBeacons.get(i)._lastDetectTime ) < BEACONCON_TIMEOUT )
+                            if ((nCurrentTime - detectedBeacons.get(i)._lastDetectTime) < BEACONCON_TIMEOUT)
                                 tempBeacons.add(detectedBeacons.get(i));
                         }
                         detectedBeacons = tempBeacons;
 
                         if (beacons.size() > 0) {
-                            for ( int i = 0; i < beacons.size(); i++ ) {
+                            for (int i = 0; i < beacons.size(); i++) {
                                 Beacon beacon = beacons.get(i);
 
+                                if (beacon.getProximityUUID().equalsIgnoreCase(BEACON_UUID) == false)
+                                    continue;
+                                if (beacon.getMajor() != BEACON_MAJOR)
+                                    continue;
+
                                 int nPos = 0;
-                                boolean isAddedBeacon  = false;
-                                for ( nPos = 0; nPos < detectedBeacons.size(); nPos++ ) {
+                                boolean isAddedBeacon = false;
+                                for (nPos = 0; nPos < detectedBeacons.size(); nPos++) {
                                     if (detectedBeacons.get(nPos)._beacon.getMinor() == beacon.getMinor()) {
                                         isAddedBeacon = true;
                                         detectedBeacons.get(nPos)._lastDetectTime = System.currentTimeMillis();
@@ -111,9 +157,11 @@ public class NearbyActivity extends SuperActivity implements View.OnClickListene
                             }
                         }
 
-                        for (int i = 0; i < detectedBeacons.size(); i++ ) {
+                        for (int i = 0; i < detectedBeacons.size(); i++) {
                             for (int j = 0; j < arrDealInfos.size(); j++) {
-                                if ( detectedBeacons.get(i)._beacon.getMinor() == arrDealInfos.get(j).merchantId) {
+                                if (detectedBeacons.get(i)._beacon.getMinor() == arrDealInfos.get(j).merchantId) {
+//                                Log.e("TAG", "uuid : " + detectedBeacons.get(i)._beacon.getProximityUUID() + " Major: " + detectedBeacons.get(i)._beacon.getMajor() + " Minor: " + detectedBeacons.get(i)._beacon.getMinor());
+//                                if (2 != arrDealInfos.get(j).merchantId) {
                                     arrDispDeals.add(arrDealInfos.get(j));
                                     break;
                                 }
@@ -124,6 +172,41 @@ public class NearbyActivity extends SuperActivity implements View.OnClickListene
                     }
                 });
             }
+        });
+
+        beaconManager.setMonitoringListener(new BeaconManager.MonitoringListener() {
+            @Override
+            public void onEnteredRegion(Region region, List<Beacon> beacons) {
+                String szIdentifier = region.getIdentifier();
+                int notificationId = 0;
+                try {
+                    notificationId = Integer.parseInt(szIdentifier);
+                } catch (Exception ex) {
+                    notificationId = 0;
+                }
+
+                try {
+                    if (notificationId == 0) {
+                        //postNotification(0, "Welcome", "Region");
+                    }
+                    else {
+                        if (notificationId > arrNotification.size()) {
+                            //postNotification(0, "Welcome", "Region");
+                        }
+                        else {
+                            Calendar c = Calendar.getInstance();
+                            int dayOfMonth = c.get(Calendar.DAY_OF_MONTH);
+                            if (m_db.getNotification(notificationId, dayOfMonth) == 0 ) {
+                                m_db.insertNotification(notificationId, dayOfMonth);
+                                postNotification(notificationId, "Welcome", arrNotification.get(notificationId - 1).message);
+                            }
+                        }
+                    }
+                }catch (Exception ex) {}
+            }
+
+            @Override
+            public void onExitedRegion(Region region) {}
         });
     }
 
@@ -137,8 +220,6 @@ public class NearbyActivity extends SuperActivity implements View.OnClickListene
         editSearch = (EditText) findViewById(R.id.editSearch);
 
         llContent = (LinearLayout) findViewById(R.id.llContent);
-        llSearch = (LinearLayout) findViewById(R.id.llSearch);
-        llSearch.setOnClickListener(this);
 
         imageBack = (ImageView) findViewById(R.id.imageBack);
         imageBack.setOnClickListener(this);
@@ -170,7 +251,14 @@ public class NearbyActivity extends SuperActivity implements View.OnClickListene
     public void onStop() {
         try {
             beaconManager.stopRanging(ALL_ESTIMOTE_BEACONS_REGION);
-        } catch (RemoteException e) {}
+        } catch (RemoteException e) {
+        }
+
+        for (Region region : NOTIFICATION_BEACONS) {
+            try {
+                beaconManager.stopMonitoring(region);
+            }catch(Exception ex){}
+        }
 
         super.onStop();
     }
@@ -178,6 +266,8 @@ public class NearbyActivity extends SuperActivity implements View.OnClickListene
     @Override
     public void onResume() {
         super.onResume();
+
+        notificationManager.cancelAll();
     }
 
     @Override
@@ -185,6 +275,7 @@ public class NearbyActivity extends SuperActivity implements View.OnClickListene
         super.onDestroy();
 
         beaconManager.disconnect();
+        notificationManager.cancelAll();
     }
 
     @Override
@@ -209,6 +300,16 @@ public class NearbyActivity extends SuperActivity implements View.OnClickListene
                     Toast.makeText(NearbyActivity.this, "Cannot start ranging, something terrible happened", Toast.LENGTH_LONG).show();
                     Log.e(TAG, "Cannot start ranging", e);
                 }
+
+                for (Region region : NOTIFICATION_BEACONS) {
+                    try {
+                            beaconManager.startMonitoring(region);
+                        }
+                    catch (Exception ex) {
+                        Toast.makeText(NearbyActivity.this, "Cannot start monitoring, something terrible happened", Toast.LENGTH_LONG).show();
+                        Log.e(TAG, "Cannot start monitoring", ex);
+                    }
+                }
             }
         });
     }
@@ -220,23 +321,6 @@ public class NearbyActivity extends SuperActivity implements View.OnClickListene
         }
         else if ( v == imageBack ) {
             finish();
-        }
-        else if ( v == llSearch ) {
-//            String szSearch = editSearch.getText().toString().toLowerCase();
-//            ArrayList<STDealInfo> arrayList = new ArrayList<STDealInfo>();
-//
-//            if (szSearch.length() == 0) {
-//                arrayList = arrDealInfos;
-//            }
-//            else {
-//                for ( int i = 0; i < arrDealInfos.size(); i++ ) {
-//                    if (arrDealInfos.get(i).productName.toLowerCase().contains(szSearch)) {
-//                        arrayList.add(arrDealInfos.get(i));
-//                    }
-//                }
-//            }
-//
-//            showDeals(arrayList);
         }
         else if ( textAllDeals == v ) {
             Intent intent = new Intent(this, AllDealsActivity.class);
@@ -253,7 +337,7 @@ public class NearbyActivity extends SuperActivity implements View.OnClickListene
         int nCount = arrList.size();
 
         for (int i = 0; i < (nCount + 1) / 2 ; i++) {
-            View view = LayoutInflater.from(this).inflate(R.layout.view_dealitem, null);
+            View view = LayoutInflater.from(this).inflate(R.layout.view_nearbyitem, null);
             ResolutionSet._instance.iterateChild(view);
 
             STDealInfo stDealInfo1 = new STDealInfo();
@@ -271,7 +355,16 @@ public class NearbyActivity extends SuperActivity implements View.OnClickListene
 
             if (stDealInfo1 != null) {
                 SmartImageView imageLeft = (SmartImageView)view.findViewById(R.id.imageLeftDeal);
-                imageLeft.setImageUrl(stDealInfo1.imageUrl);
+                if (m_db.getLocImgPath(stDealInfo1.dealId).length() > 0) {
+                    try {
+                        imageLeft.setImageBitmap(GlobalFunc.getBitmapFromLocalpath(m_db.getLocImgPath(stDealInfo1.dealId)));
+                    } catch (Exception ex) {
+                        imageLeft.setImageUrl(stDealInfo1.imageUrl);
+                    }
+                } else {
+                    imageLeft.setImageUrl(stDealInfo1.imageUrl);
+                    GlobalFunc.saveProductImage(NearbyActivity.this, stDealInfo1.dealId, stDealInfo1.imageUrl);
+                }
                 TextView textBrand = (TextView) view.findViewById(R.id.textLeftBrand);
                 textBrand.setText(stDealInfo1.productBrand);
                 TextView textName = (TextView) view.findViewById(R.id.textLeftName);
@@ -317,7 +410,16 @@ public class NearbyActivity extends SuperActivity implements View.OnClickListene
             }
             if (stDealInfo2 != null) {
                 SmartImageView imageLeft = (SmartImageView)view.findViewById(R.id.imageRightDeal);
-                imageLeft.setImageUrl(stDealInfo2.imageUrl);
+                if (m_db.getLocImgPath(stDealInfo2.dealId).length() > 0) {
+                    try {
+                        imageLeft.setImageBitmap(GlobalFunc.getBitmapFromLocalpath(m_db.getLocImgPath(stDealInfo2.dealId)));
+                    } catch (Exception ex) {
+                        imageLeft.setImageUrl(stDealInfo2.imageUrl);
+                    }
+                } else {
+                    imageLeft.setImageUrl(stDealInfo2.imageUrl);
+                    GlobalFunc.saveProductImage(NearbyActivity.this, stDealInfo2.dealId, stDealInfo2.imageUrl);
+                }
                 TextView textBrand = (TextView) view.findViewById(R.id.textRightBrand);
                 textBrand.setText(stDealInfo2.productBrand);
                 TextView textName = (TextView) view.findViewById(R.id.textRightName);
@@ -364,5 +466,25 @@ public class NearbyActivity extends SuperActivity implements View.OnClickListene
 
             llContent.addView(view);
         }
+    }
+
+    private void postNotification(int notificationId, String title, String msg) {
+        Intent notifyIntent = new Intent(this, NearbyActivity.class);
+        notifyIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        PendingIntent pendingIntent = PendingIntent.getActivities(
+                NearbyActivity.this,
+                0,
+                new Intent[]{notifyIntent},
+                PendingIntent.FLAG_UPDATE_CURRENT);
+        Notification notification = new Notification.Builder(NearbyActivity.this)
+                .setSmallIcon(R.drawable.icon)
+                .setContentTitle(title)
+                .setContentText(msg)
+                .setAutoCancel(true)
+                .setContentIntent(pendingIntent)
+                .build();
+        notification.defaults |= Notification.DEFAULT_SOUND;
+        notification.defaults |= Notification.DEFAULT_LIGHTS;
+        notificationManager.notify(notificationId, notification);
     }
 }

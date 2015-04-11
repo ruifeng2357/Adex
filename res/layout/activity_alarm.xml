@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:id="@+id/rlParent"
+            android:background="@color/transparent">
+
+    <TextView android:layout_width="wrap_content"
+              android:layout_height="200px"
+              android:layout_centerInParent="true"
+              android:gravity="center"
+              android:textColor="@color/adex_tintcolor"
+              android:layout_marginLeft="30px"
+              android:layout_marginRight="30px"
+              android:textSize="30px"
+              android:text="Today’s Lucky Draw winner has been announced.\nFind out if you are the winner here."
+              android:id="@+id/textMessage"
+              android:background="@drawable/roundredgray"
+            />
+
+</RelativeLayout>
+

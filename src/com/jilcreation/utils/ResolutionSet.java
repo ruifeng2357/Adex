@@ -21,20 +21,26 @@ public class ResolutionSet {
 	public static float fPro  = 1;
 	public static int nDesignWidth = 720;
 	public static int nDesignHeight = 1280;
+
+    static boolean _isPortrait = true;
 	
 	public static ResolutionSet _instance = new ResolutionSet(); 
 	
-	public ResolutionSet() {
-		
-	}
+	public ResolutionSet() {}
+
+    public static void setIsPortrait(boolean isPortrait) {
+        _isPortrait = isPortrait;
+    }
 	
 	public void setResolution(int x, int y, boolean isPortrate)
 	{
-        if (!isPortrate)
+        _isPortrait = isPortrate;
+
+        if (_isPortrait)
 		    fXpro = (float)x / nDesignWidth;
         else
             fXpro = (float)x / nDesignHeight;
-        if (!isPortrate)
+        if (isPortrate)
 		    fYpro = (float)y / nDesignHeight;
         else
             fYpro = (float)y / nDesignWidth;

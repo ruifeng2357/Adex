@@ -107,7 +107,9 @@ public class ExhibitorActivity extends SuperActivity implements View.OnClickList
             STExhibitorInfo exhibitorInfo = arrExhibitorInfos.get(i);
 
             TextView textView = (TextView) view.findViewById(R.id.textName);
-            textView.setText((i+1) + ". " + exhibitorInfo.merchantName);
+            textView.setText(exhibitorInfo.merchantName);
+            TextView textBooth = (TextView) view.findViewById(R.id.textBooth);
+            textBooth.setText(exhibitorInfo.booth);
 
             llContent.addView(view);
         }

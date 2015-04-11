@@ -17,12 +17,14 @@ public class MainMenuActivity extends NavigationLiveo implements NavigationLiveo
     public static final int INDEX_HOME = 0;
     public static final int INDEX_HISTORY = 1;
     public static final int INDEX_FAVOURITE = 2;
-    public static final int INDEX_SETTINGS = 3;
+    public static final int LUCKY_DRAW = 3;
+    public static final int INDEX_SETTINGS = 4;
 
     public List<String> mListNameItem;
 
     Fragment _currentFragment = null;
     Fragment _homeFragment = null;
+    Fragment _luckFragment = null;
     Fragment _historyFragment = null;
     Fragment _favouriteFragment = null;
 
@@ -43,7 +45,8 @@ public class MainMenuActivity extends NavigationLiveo implements NavigationLiveo
         mListNameItem.add(0, "Home");
         mListNameItem.add(1, "History");
         mListNameItem.add(2, "Favourite");
-        mListNameItem.add(3, "Settings");
+        mListNameItem.add(3, "LuckyDraw Result");
+        mListNameItem.add(4, "Settings");
 
         // icons list items
         List<Integer> mListIconItem = new ArrayList<Integer>();
@@ -51,10 +54,15 @@ public class MainMenuActivity extends NavigationLiveo implements NavigationLiveo
         mListIconItem.add(1, 0);
         mListIconItem.add(2, 0);
         mListIconItem.add(3, 0);
+        mListIconItem.add(4, 0);
 
         setColorSelectedItemNavigation(R.color.adex_tintcolor);
 
         this.setNavigationAdapter(mListNameItem, mListIconItem, null, null);
+
+        int nIndex = getIntent().getIntExtra("SELINDEX", 0);
+        onItemClickNavigation(nIndex, R.id.container);
+        setCurrentPosition(nIndex);
     }
 
     @Override
@@ -111,6 +119,15 @@ public class MainMenuActivity extends NavigationLiveo implements NavigationLiveo
             if (_currentFragment != _favouriteFragment) {
                 fragmentManager.beginTransaction().replace(layoutContainerId, _favouriteFragment).commit();
                 _currentFragment = _favouriteFragment;
+            }
+        }
+        else if (position == LUCKY_DRAW) {
+            if (_luckFragment == null) {
+                _luckFragment = new LuckyDrawFragment();
+            }
+            if (_currentFragment != _luckFragment) {
+                fragmentManager.beginTransaction().replace(layoutContainerId, _luckFragment).commit();
+                _currentFragment = _luckFragment;
             }
         }
         else if (position == INDEX_SETTINGS) {

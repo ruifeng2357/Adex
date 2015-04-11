@@ -2,8 +2,10 @@ package com.jilcreation.adex;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.*;
 import com.jilcreation.model.STDealInfo;
 import com.jilcreation.model.modelmanage.SQLiteDBHelper;
@@ -17,10 +19,13 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class AllDealsActivity extends SuperActivity implements View.OnClickListener {
+    private boolean isShowing = false;
+
     protected RelativeLayout rlBack;
     protected ImageView imageBack;
     protected LinearLayout llContent;
-    protected LinearLayout llSearch;
+    protected ImageView imageSearch;
+    protected RelativeLayout rlSearch;
     protected EditText editSearch;
     protected TextView textNearby;
 
@@ -46,10 +51,25 @@ public class AllDealsActivity extends SuperActivity implements View.OnClickListe
         textNearby = (TextView) findViewById(R.id.textNearby);
         textNearby.setOnClickListener(this);
         editSearch = (EditText) findViewById(R.id.editSearch);
+        editSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    String szSearch = editSearch.getText().toString().toLowerCase();
+
+                    startProgress();
+                    ServerManager.searchBy(handlerSearchBy, szSearch);
+                }
+
+                return true;
+            }
+        });
 
         llContent = (LinearLayout) findViewById(R.id.llContent);
-        llSearch = (LinearLayout) findViewById(R.id.llSearch);
-        llSearch.setOnClickListener(this);
+        rlSearch = (RelativeLayout) findViewById(R.id.rlSearch);
+        rlSearch.setOnClickListener(this);
+        imageSearch = (ImageView) findViewById(R.id.imageSearch);
+        imageSearch.setOnClickListener(this);
 
         imageBack = (ImageView) findViewById(R.id.imageBack);
         imageBack.setOnClickListener(this);
@@ -81,11 +101,19 @@ public class AllDealsActivity extends SuperActivity implements View.OnClickListe
         else if ( v == imageBack ) {
             finish();
         }
-        else if ( v == llSearch ) {
-            String szSearch = editSearch.getText().toString().toLowerCase();
-
-            startProgress();
-            ServerManager.searchBy(handlerSearchBy, szSearch);
+        else if ( v == imageSearch ) {
+            if (isShowing == false) {
+                RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams)rlSearch.getLayoutParams();
+                layoutParams.height = (int)(100 * ResolutionSet.fPro);
+                rlSearch.setLayoutParams(layoutParams);
+                isShowing = true;
+            }
+            else {
+                RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams)rlSearch.getLayoutParams();
+                layoutParams.height = 0;
+                rlSearch.setLayoutParams(layoutParams);
+                isShowing = false;
+            }
         }
         else if ( textNearby == v ) {
             Intent intent = new Intent(this, NearbyActivity.class);
@@ -118,7 +146,7 @@ public class AllDealsActivity extends SuperActivity implements View.OnClickListe
                         dealInfo = STDealInfo.decodeFromJSON(object);
 
                         arrDealInfos.add(dealInfo);
-                        m_db.insert(dealInfo.dealId, dealInfo.merchantId, dealInfo.productBrand, dealInfo.productName, dealInfo.imageUrl, 0, 0);
+                        m_db.insert(dealInfo.dealId, dealInfo.merchantId, dealInfo.merchantName, dealInfo.booth, dealInfo.productBrand, dealInfo.productName, dealInfo.imageUrl, 0, 0);
                     }
 
                     ArrayList<STDealInfo> arrList = arrDealInfos;
@@ -201,7 +229,16 @@ public class AllDealsActivity extends SuperActivity implements View.OnClickListe
 
             if (stDealInfo1 != null) {
                 SmartImageView imageLeft = (SmartImageView)view.findViewById(R.id.imageLeftDeal);
-                imageLeft.setImageUrl(stDealInfo1.imageUrl);
+                if (m_db.getLocImgPath(stDealInfo1.dealId).length() > 0) {
+                    try {
+                        imageLeft.setImageBitmap(GlobalFunc.getBitmapFromLocalpath(m_db.getLocImgPath(stDealInfo1.dealId)));
+                    } catch (Exception ex) {
+                        imageLeft.setImageUrl(stDealInfo1.imageUrl);
+                    }
+                } else {
+                    imageLeft.setImageUrl(stDealInfo1.imageUrl);
+                    GlobalFunc.saveProductImage(AllDealsActivity.this, stDealInfo1.dealId, stDealInfo1.imageUrl);
+                }
                 TextView textBrand = (TextView) view.findViewById(R.id.textLeftBrand);
                 textBrand.setText(stDealInfo1.productBrand);
                 TextView textName = (TextView) view.findViewById(R.id.textLeftName);
@@ -247,7 +284,16 @@ public class AllDealsActivity extends SuperActivity implements View.OnClickListe
             }
             if (stDealInfo2 != null) {
                 SmartImageView imageLeft = (SmartImageView)view.findViewById(R.id.imageRightDeal);
-                imageLeft.setImageUrl(stDealInfo2.imageUrl);
+                if (m_db.getLocImgPath(stDealInfo2.dealId).length() > 0) {
+                    try {
+                        imageLeft.setImageBitmap(GlobalFunc.getBitmapFromLocalpath(m_db.getLocImgPath(stDealInfo2.dealId)));
+                    } catch (Exception ex) {
+                        imageLeft.setImageUrl(stDealInfo2.imageUrl);
+                    }
+                } else {
+                    imageLeft.setImageUrl(stDealInfo2.imageUrl);
+                    GlobalFunc.saveProductImage(AllDealsActivity.this, stDealInfo2.dealId, stDealInfo2.imageUrl);
+                }
                 TextView textBrand = (TextView) view.findViewById(R.id.textRightBrand);
                 textBrand.setText(stDealInfo2.productBrand);
                 TextView textName = (TextView) view.findViewById(R.id.textRightName);

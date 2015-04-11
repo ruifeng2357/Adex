@@ -1,12 +1,10 @@
 package com.jilcreation.adex;
 
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import com.jilcreation.utils.ResolutionSet;
 
 public abstract class BaseFragment extends Fragment {
@@ -25,6 +23,7 @@ public abstract class BaseFragment extends Fragment {
         _inflater = inflater;
 
         mainLayout = rootView.findViewById(R.id.rlParent);
+        ResolutionSet.setIsPortrait(true);
         ResolutionSet._instance.iterateChild(mainLayout);
 //        mainLayout.getViewTreeObserver().addOnGlobalLayoutListener(
 //                new ViewTreeObserver.OnGlobalLayoutListener() {

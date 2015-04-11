@@ -3,7 +3,7 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:id="@+id/rlParent" android:background="@color/adex_gray">
+              android:id="@+id/rlParent" android:background="@color/adex_white">
 
     <RelativeLayout android:layout_width="fill_parent"
                     android:layout_height="140px" android:background="@color/adex_navvarcolor" android:id="@+id/rlNavbar">
@@ -15,8 +15,8 @@
                 android:scaleType="fitCenter" android:src="@drawable/icon_menutab"/>
 
         <TextView android:layout_width="400px" android:layout_height="fill_parent" android:text="History"
-                  android:layout_centerInParent="true" android:textColor="@color/adex_white" android:textSize="40px"
-                  android:gravity="center"/>
+                  android:layout_centerInParent="true" android:textColor="@color/adex_white" android:textSize="48px"
+                  android:gravity="center" android:textStyle="bold"/>
 
     </RelativeLayout>
 

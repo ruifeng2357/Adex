@@ -18,7 +18,11 @@ import android.util.Log;
 import android.view.*;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
+import com.jilcreation.model.modelmanage.SQLiteDBHelper;
+
 import java.io.*;
+import java.net.URL;
+import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -498,6 +502,17 @@ public class GlobalFunc
 		return Bitmap.createBitmap(sourceBitmap, 0, 0, sourceBitmap.getWidth(), sourceBitmap.getHeight(), matrix, true);
 	}
 
+	public static Bitmap getBitmapFromLocalpath(String locImgPath) {
+		Bitmap bmp = null;
+		try {
+			bmp = BitmapFactory.decodeFile(locImgPath);
+		} catch (Exception ex) {
+			bmp = null;
+		}
+
+		return bmp;
+	}
+
 	public static int getImageOrientation(String imagePath){
 		int nAngle = 0;
 		try {
@@ -532,5 +547,57 @@ public class GlobalFunc
 		strRet = strVal.replaceAll("[^a-zA-Z_0-9]+","");
 
 		return strRet;
+	}
+
+	public static void saveProductImage(final Context context, final long dealId, final String remotePath) {
+		Thread thr = new Thread(new Runnable()
+		{
+			@Override
+			public void run()
+			{
+				try
+				{
+					int nBytesRead = 0, nByteWritten = 0;
+					byte[] buf = new byte[1024];
+					String local_file_path = "";
+					local_file_path = "" + System.currentTimeMillis();
+
+					URLConnection urlConn = null;
+					URL fileUrl = null;
+					InputStream inStream = null;
+					OutputStream outStream = null;
+
+					File dir_item = null, file_item = null;
+					fileUrl = new URL(remotePath);
+					urlConn = fileUrl.openConnection();
+					inStream = urlConn.getInputStream();
+					local_file_path = remotePath.substring(remotePath.lastIndexOf("/") + 1);
+					dir_item = new File(context.getApplicationContext().getFilesDir(), "ProductImage");
+					dir_item.mkdirs();
+					file_item = new File(dir_item, local_file_path);
+
+					outStream = new BufferedOutputStream(new FileOutputStream(file_item));
+
+					while ( ((nBytesRead = inStream.read(buf)) != -1))
+					{
+						outStream.write(buf, 0, nBytesRead);
+						nByteWritten += nBytesRead;
+					}
+
+					inStream.close();
+					outStream.flush();
+					outStream.close();
+
+					SQLiteDBHelper m_db = new SQLiteDBHelper(context);
+					m_db.setLocImgPath(dealId, file_item.getAbsolutePath());
+				}
+				catch (Exception ex)
+				{
+					ex.printStackTrace();
+				}
+			}
+		});
+
+		thr.start();
 	}
 }

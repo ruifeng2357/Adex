@@ -9,63 +9,92 @@
             android:layout_width="fill_parent"
             android:layout_height="140px" android:background="@color/adex_navvarcolor" android:id="@+id/rlNavbar">
 
-        <ImageView android:layout_width="64px" android:layout_height="64px" android:id="@+id/imageBack"
-                   android:layout_centerVertical="true" android:layout_marginLeft="30px" android:src="@drawable/icon_back"
+        <ImageView android:layout_width="64px"
+                   android:layout_height="64px"
+                   android:id="@+id/imageBack"
+                   android:layout_centerVertical="true"
+                   android:layout_marginLeft="30px"
+                   android:src="@drawable/icon_back"
                    android:scaleType="fitCenter"/>
 
-        <!--<ImageView-->
-                <!--android:layout_width="86px"-->
-                <!--android:layout_height="68px"-->
-                <!--android:id="@+id/imageMenu" android:layout_alignParentLeft="true"-->
-                <!--android:layout_centerVertical="true" android:layout_marginLeft="30px"-->
-                <!--android:scaleType="fitCenter" android:src="@drawable/icon_menutab"/>-->
+        <ImageView
+                android:layout_width="64px"
+                android:layout_height="64px"
+                android:id="@+id/imageSearch"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="30px"
+                android:scaleType="fitCenter"
+                android:src="@drawable/icon_search"/>
+
+        <TextView android:layout_width="fill_parent"
+                  android:layout_height="fill_parent"
+                android:text="Deals"
+                android:gravity="center"
+                android:textColor="@color/adex_white"
+                android:textSize="54px"
+                android:textStyle="bold"/>
 
     </RelativeLayout>
     <LinearLayout
             android:layout_width="fill_parent" android:orientation="horizontal"
             android:layout_height="90px" android:id="@+id/rlTitlebar" android:layout_below="@+id/rlNavbar">
         <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="240px"
-                android:layout_height="fill_parent" android:background="@drawable/rectdealtitle">
-
-            <TextView android:layout_width="fill_parent" android:layout_height="fill_parent"
-                    android:text="All Deals" android:id="@+id/textAllDeals" android:textColor="@color/adex_white"
-                    android:gravity="center" android:textSize="40px" android:textStyle="bold" />
-
-        </LinearLayout>
-        <LinearLayout
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:layout_width="360px"
-                android:layout_height="fill_parent" android:background="@drawable/rectdealtitle">
+                android:layout_height="fill_parent">
 
-            <TextView android:layout_width="fill_parent" android:layout_height="fill_parent"
-                      android:text="What's Nearby" android:id="@+id/textNearby" android:textColor="@color/adex_white"
-                      android:gravity="center" android:textSize="40px" android:textStyle="bold" />
+            <TextView android:layout_width="fill_parent"
+                      android:layout_height="80px"
+                    android:text="All Deals"
+                    android:id="@+id/textAllDeals"
+                    android:textColor="@color/adex_gray"
+                    android:gravity="center"
+                    android:textSize="40px"
+                    android:textStyle="bold" />
+
+            <TextView android:layout_width="300px"
+                      android:layout_height="10px"
+                      android:layout_gravity="center"
+                    android:id="@+id/textAllDealSeparate"
+                    android:background="@color/adex_mainmenubackcolor"/>
 
         </LinearLayout>
         <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="fill_parent" android:id="@+id/llSearch"
-                android:layout_height="fill_parent" android:background="@drawable/rectsearch" android:gravity="center">
-            <ImageView
-                    android:layout_width="58px"
-                    android:layout_height="58px"
-                    android:scaleType="fitCenter" android:src="@drawable/icon_search"/>
+                android:orientation="vertical"
+                android:layout_width="360px"
+                android:layout_height="fill_parent">
+
+            <TextView android:layout_width="fill_parent"
+                      android:layout_height="80px"
+                      android:text="Nearby Deal"
+                      android:id="@+id/textNearby"
+                      android:textColor="@color/adex_gray"
+                      android:gravity="center"
+                      android:textSize="40px"
+                      android:textStyle="bold" />
+
+            <TextView android:layout_width="fill_parent"
+                      android:layout_height="10px" />
+
         </LinearLayout>
     </LinearLayout>
     <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_height="100px" android:layout_below="@+id/rlTitlebar"
-            android:background="@color/adex_navvarcolor" android:id="@+id/rlSearch">
+            android:layout_height="0px"
+            android:layout_below="@+id/rlTitlebar"
+            android:background="@color/adex_navvarcolor"
+            android:id="@+id/rlSearch"
+            android:visibility="visible">
         <EditText
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:id="@+id/editSearch" android:background="@drawable/roundsearch" android:gravity="left|center_vertical"
-                android:textColor="@color/adex_white" android:layout_marginLeft="20px"
+                android:textColor="@color/adex_gray" android:layout_marginLeft="20px"
                 android:layout_marginRight="20px" android:layout_marginTop="15px" android:layout_marginBottom="15px"
                 android:paddingLeft="25px" android:paddingRight="25px"
-                android:textSize="36px" android:singleLine="true" android:ellipsize="end"/>
+                android:textSize="36px" android:singleLine="true" android:ellipsize="end"
+                android:imeOptions="actionSearch"/>
     </RelativeLayout>
     <ScrollView android:layout_width="fill_parent" android:layout_height="fill_parent"
                 android:layout_below="@+id/rlSearch"

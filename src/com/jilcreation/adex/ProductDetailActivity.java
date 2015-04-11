@@ -11,16 +11,18 @@ import com.jilcreation.model.modelmanage.SQLiteDBHelper;
 import com.jilcreation.server.ServerManager;
 import com.jilcreation.server.http.AsyncHttpResponseHandler;
 import com.jilcreation.ui.SmartImageView.SmartImageView;
+import com.jilcreation.utils.GlobalFunc;
+import org.w3c.dom.Text;
 
 public class ProductDetailActivity extends SuperActivity implements View.OnClickListener {
     STDealInfo mDealInfo = new STDealInfo();
     private long startTime = 0;
 
     protected SmartImageView imagePhoto;
+    protected TextView textMerchantName;
+    protected TextView textBooth;
     protected TextView textBrand;
     protected TextView textName;
-    protected TextView textCategory;
-    protected TextView textModel;
     protected TextView textPrice;
     protected TextView textDetail;
     protected RelativeLayout rlBack;
@@ -62,14 +64,24 @@ public class ProductDetailActivity extends SuperActivity implements View.OnClick
         imageBack = (ImageView) findViewById(R.id.imageBack);
         imageBack.setOnClickListener(this);
         imagePhoto = (SmartImageView) findViewById(R.id.imageProduct);
-        imagePhoto.setImageUrl(mDealInfo.imageUrl);
+        if (m_db.getLocImgPath(mDealInfo.dealId).length() > 0) {
+            try {
+                imagePhoto.setImageBitmap(GlobalFunc.getBitmapFromLocalpath(m_db.getLocImgPath(mDealInfo.dealId)));
+            } catch (Exception ex) {
+                imagePhoto.setImageUrl(mDealInfo.imageUrl);
+            }
+        } else {
+            imagePhoto.setImageUrl(mDealInfo.imageUrl);
+            GlobalFunc.saveProductImage(ProductDetailActivity.this, mDealInfo.dealId, mDealInfo.imageUrl);
+        }
+        textMerchantName = (TextView) findViewById(R.id.textMerchantName);
+        textMerchantName.setText(mDealInfo.merchantName);
+        textBooth = (TextView) findViewById(R.id.textBooth);
+        textBooth.setText(mDealInfo.booth);
         textBrand = (TextView) findViewById(R.id.textBrand);
         textBrand.setText(mDealInfo.productBrand);
-        textName = (TextView) findViewById(R.id.textName);
+        textName = (TextView) findViewById(R.id.textProductName);
         textName.setText(mDealInfo.productName);
-        textCategory = (TextView) findViewById(R.id.textCategory);
-        textCategory.setText(mDealInfo.category);
-        textModel = (TextView) findViewById(R.id.textModel);
         textPrice = (TextView) findViewById(R.id.textPrice);
         String szPrice = String.format("S$%.2f", mDealInfo.price);
         textPrice.setText(szPrice);

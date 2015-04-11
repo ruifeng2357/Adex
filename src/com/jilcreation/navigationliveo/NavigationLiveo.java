@@ -22,11 +22,14 @@ import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
 import com.jilcreation.adex.R;
+import com.jilcreation.utils.ResolutionSet;
+
 import java.util.List;
 
 public abstract class NavigationLiveo extends FragmentActivity {
@@ -69,6 +72,7 @@ public abstract class NavigationLiveo extends FragmentActivity {
 		setContentView(R.layout.navigation_main);
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.layout_parent);
+        ResolutionSet._instance.iterateChild(mDrawerLayout);
 
         mList = (ListView) findViewById(R.id.list);
         mList.setOnItemClickListener(new DrawerItemClickListener());

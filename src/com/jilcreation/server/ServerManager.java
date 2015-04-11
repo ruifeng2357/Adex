@@ -48,7 +48,7 @@ public class ServerManager {
         {
             AsyncHttpClient client = new AsyncHttpClient();
             client.setTimeout(APIManager.connectTimeout);
-            client.post(url, null, handler);
+            client.get(url, null, handler);
         }
         catch (Exception ex)
         {
@@ -71,6 +71,15 @@ public class ServerManager {
                 break;
             case 3:
                 url = url + "?category=" + "third%20stage";
+                break;
+            case 4:
+                url = url + "?category=" + "fourth%20stage";
+                break;
+            case 5:
+                url = url + "?category=" + "fifth%20stage";
+                break;
+            case 6:
+                url = url + "?category=" + "sixth%20stage";
                 break;
         }
 
@@ -158,6 +167,21 @@ public class ServerManager {
 
             if (handler != null)
                 handler.onFailure(null, ex.getMessage());
+        }
+    }
+
+    public static void getNotification(AsyncHttpResponseHandler handler) {
+        String url = APIManager.CMD_NOTIFICATION;
+
+        try {
+            AsyncHttpClient client = new AsyncHttpClient();
+            client.setTimeout(APIManager.connectTimeout);
+            client.get(url, null, handler);
+        }catch (Exception ex) {
+            ex.printStackTrace();
+            if (handler != null) {
+                handler.onFailure(null, ex.getMessage());
+            }
         }
     }
 }

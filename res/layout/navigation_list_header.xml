@@ -6,8 +6,9 @@
     android:fitsSystemWindows="true"
     tools:ignore="MissingPrefix">
 
-    <TextView android:layout_width="fill_parent" android:layout_height="192px"
+    <TextView android:layout_width="fill_parent" android:layout_height="120px"
             android:text="MENU" android:textStyle="bold" android:textColor="#000000"
             android:gravity="center_vertical|left" android:layout_marginLeft="50px"
+            android:layout_centerVertical="true"
             android:textSize="40px" />
 </RelativeLayout>

@@ -20,4 +20,5 @@ public class APIManager {
     public static String CMD_UPDATEPREF = API_PREFIX + "/updateprefservice.php";
     public static String CMD_UPDATEDURATION = API_PREFIX + "/updatedurationservice.php";
     public static String CMD_SEARCHBY = API_PREFIX + "/searchbykeywordservice.php";
+    public static String CMD_NOTIFICATION = API_PREFIX + "/selectnotificationservice.php";
 }

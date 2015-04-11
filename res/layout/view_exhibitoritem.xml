@@ -12,8 +12,19 @@
             android:layout_height="fill_parent" android:layout_toRightOf="@+id/rlMaginLeft">
 
         <TextView android:layout_width="fill_parent" android:layout_height="98px" android:id="@+id/textName"
-                android:textColor="@color/adex_black" android:textSize="36px"
+                android:textColor="@color/adex_black" android:textSize="36px" android:layout_toLeftOf="@+id/textBooth"
                 android:gravity="left|center_vertical" android:singleLine="true" android:ellipsize="end" />
+
+        <TextView android:layout_width="150px"
+                  android:layout_height="98px"
+                  android:id="@+id/textBooth"
+                  android:textColor="@color/adex_settingselectedback"
+                  android:textSize="36px"
+                  android:layout_alignParentRight="true"
+                  android:gravity="right|center_vertical"
+                  android:singleLine="true"
+                  android:paddingRight="20px"
+                  android:ellipsize="end" />
 
         <RelativeLayout android:layout_width="fill_parent" android:layout_height="2px"
                 android:layout_below="@+id/textName" android:background="#dddde0" ></RelativeLayout>

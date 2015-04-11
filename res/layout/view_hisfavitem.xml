@@ -6,7 +6,7 @@
               android:id="@+id/rlParent">
 
     <RelativeLayout android:layout_width="360px" android:layout_height="fill_parent"
-            android:id="@+id/rlLeftDeal" android:visibility="invisible"  android:background="@color/adex_mainmenubackcolor">
+            android:id="@+id/rlLeftDeal" android:visibility="invisible"  android:background="@color/adex_white">
 
         <view android:layout_width="fill_parent"
               android:layout_height="300px"
@@ -22,10 +22,10 @@
                     android:layout_width="270px"
                     android:layout_height="fill_parent">
                 <TextView android:layout_width="fill_parent" android:layout_height="0px"
-                        android:layout_weight="1" android:textColor="@color/adex_white"
+                        android:layout_weight="1" android:textColor="@color/adex_gray"
                         style="@style/adex_dealbrandnametext" android:id="@+id/textLeftBrand"  />
                 <TextView android:layout_width="fill_parent" android:layout_height="0px"
-                          android:layout_weight="1" android:textColor="@color/adex_white"
+                          android:layout_weight="1" android:textColor="@color/adex_gray"
                           style="@style/adex_dealproductnametext" android:id="@+id/textLeftName"  />
             </LinearLayout>
             <LinearLayout
@@ -44,7 +44,8 @@
     </RelativeLayout>
 
     <RelativeLayout android:layout_width="360px" android:layout_height="fill_parent"
-            android:id="@+id/rlRightDeal" android:layout_toRightOf="@+id/rlLeftDeal" android:visibility="invisible"  android:background="@color/adex_mainmenubackcolor">
+            android:id="@+id/rlRightDeal" android:layout_toRightOf="@+id/rlLeftDeal" android:visibility="invisible"
+            android:background="@color/adex_white">
 
         <view android:layout_width="fill_parent"
               android:layout_height="300px"
@@ -60,10 +61,10 @@
                     android:layout_width="270px"
                     android:layout_height="fill_parent">
                 <TextView android:layout_width="fill_parent" android:layout_height="0px"
-                          android:layout_weight="1" android:textColor="@color/adex_white"
+                          android:layout_weight="1" android:textColor="@color/adex_gray"
                           style="@style/adex_dealbrandnametext" android:id="@+id/textRightBrand" />
                 <TextView android:layout_width="fill_parent" android:layout_height="0px"
-                          android:layout_weight="1" android:textColor="@color/adex_white"
+                          android:layout_weight="1" android:textColor="@color/adex_gray"
                           style="@style/adex_dealproductnametext" android:id="@+id/textRightName" />
             </LinearLayout>
             <LinearLayout

@@ -1,34 +1,21 @@
 package com.jilcreation.adex;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import com.jilcreation.model.STProgrammeInfo;
-import com.jilcreation.server.ServerManager;
-import com.jilcreation.server.http.AsyncHttpResponseHandler;
-import com.jilcreation.utils.ResolutionSet;
-import org.json.JSONArray;
-import org.json.JSONObject;
-import java.util.ArrayList;
+import android.widget.RelativeLayout;
+import com.jilcreation.utils.GlobalFunc;
 
 public class ProgrammeActivity extends SuperActivity implements View.OnClickListener {
-    private final int MODE_MAIN = 1;
-    private final int MODE_SHARE = 2;
-    private final int MODE_FILM = 3;
-    private int type = MODE_MAIN;
-
-    private int curDayNumber = -1;
-
-    protected TextView textMain;
-    protected TextView textShare;
-    protected TextView textFilm;
     protected ImageView imageBack;
-    protected LinearLayout llContent;
+    protected RelativeLayout rlMain;
+    protected RelativeLayout rlCeremony;
+    protected RelativeLayout rlShare;
+    protected RelativeLayout rlConference;
+    protected RelativeLayout rlFlim;
+    protected RelativeLayout rlExpo;
 
-    ArrayList<STProgrammeInfo> arrProgrammeInfos = new ArrayList<STProgrammeInfo>();
     /**
      * Called when the activity is first created.
      */
@@ -36,21 +23,24 @@ public class ProgrammeActivity extends SuperActivity implements View.OnClickList
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_programme);
-
-        callWebService();
     }
 
     @Override
     public void initialize() {
         imageBack = (ImageView) findViewById(R.id.imageBack);
         imageBack.setOnClickListener(this);
-        textMain = (TextView) findViewById(R.id.textMain);
-        textMain.setOnClickListener(this);
-        textShare = (TextView) findViewById(R.id.textShare);
-        textShare.setOnClickListener(this);
-        textFilm = (TextView) findViewById(R.id.textFlim);
-        textFilm.setOnClickListener(this);
-        llContent = (LinearLayout) findViewById(R.id.llContent);
+        rlMain = (RelativeLayout) findViewById(R.id.rlMain);
+        rlMain.setOnClickListener(this);
+        rlCeremony = (RelativeLayout) findViewById(R.id.rlCeremony);
+        rlCeremony.setOnClickListener(this);
+        rlShare = (RelativeLayout) findViewById(R.id.rlShare);
+        rlShare.setOnClickListener(this);
+        rlConference = (RelativeLayout) findViewById(R.id.rlConference);
+        rlConference.setOnClickListener(this);
+        rlFlim = (RelativeLayout) findViewById(R.id.rlFlim);
+        rlFlim.setOnClickListener(this);
+        rlExpo = (RelativeLayout) findViewById(R.id.rlExpo);
+        rlExpo.setOnClickListener(this);
     }
 
     @Override
@@ -65,115 +55,51 @@ public class ProgrammeActivity extends SuperActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        if ( v == textMain ) {
-            type = MODE_MAIN;
-
-            textMain.setBackground(getResources().getDrawable(R.drawable.roundleftselframe));
-            textMain.setTextColor(getResources().getColor(R.color.adex_white));
-            textShare.setBackground(getResources().getDrawable(R.drawable.rectdiselframe));
-            textShare.setTextColor(getResources().getColor(R.color.adex_programmemenublue));
-            textFilm.setBackground(getResources().getDrawable(R.drawable.roundrightdiselframe));
-            textFilm.setTextColor(getResources().getColor(R.color.adex_programmemenublue));
-
-            callWebService();
-        }
-        else if (v == textShare) {
-            type = MODE_SHARE;
-
-            textMain.setBackground(getResources().getDrawable(R.drawable.roundleftdiselframe));
-            textMain.setTextColor(getResources().getColor(R.color.adex_programmemenublue));
-            textShare.setBackground(getResources().getDrawable(R.drawable.rectselframe));
-            textShare.setTextColor(getResources().getColor(R.color.adex_white));
-            textFilm.setBackground(getResources().getDrawable(R.drawable.roundrightdiselframe));
-            textFilm.setTextColor(getResources().getColor(R.color.adex_programmemenublue));
-
-            callWebService();
-        }
-        else if ( v == textFilm ) {
-            type = MODE_FILM;
-
-            textMain.setBackground(getResources().getDrawable(R.drawable.roundleftdiselframe));
-            textMain.setTextColor(getResources().getColor(R.color.adex_programmemenublue));
-            textShare.setBackground(getResources().getDrawable(R.drawable.rectdiselframe));
-            textShare.setTextColor(getResources().getColor(R.color.adex_programmemenublue));
-            textFilm.setBackground(getResources().getDrawable(R.drawable.roundrightselframe));
-            textFilm.setTextColor(getResources().getColor(R.color.adex_white));
-
-            callWebService();
-        }
-        else if (v == imageBack) {
+        if (v == imageBack) {
             finish();
         }
-    }
+        else if (v == rlMain) {
+            Intent intent = new Intent(ProgrammeActivity.this, ProgrammeListActivity.class);
+            intent.putExtra("TYPE", ProgrammeListActivity.MODE_MAIN);
+            intent.putExtra(GlobalFunc.ANIM_DIRECTION(), GlobalFunc.ANIM_COVER_FROM_LEFT());
+            ProgrammeActivity.this.getIntent().putExtra(GlobalFunc.ANIM_DIRECTION(), GlobalFunc.ANIM_COVER_FROM_RIGHT());
+            startActivity(intent);
 
-    private void callWebService() {
-        arrProgrammeInfos.clear();
-        startProgress();
-        ServerManager.getProgrammes(type, handlerProgrammes);
-    }
-
-    private AsyncHttpResponseHandler handlerProgrammes = new AsyncHttpResponseHandler()
-    {
-        @Override
-        public void onSuccess(String content) {
-            super.onSuccess(content);    //To change body of overridden methods use File | Settings | File Templates.
-            stopProgress();
-
-            try {
-                JSONArray jsonArray = new JSONArray(content);
-                if (jsonArray == null) {
-                    return;
-                } else {
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject object = jsonArray.getJSONObject(i);
-
-                        STProgrammeInfo programmeInfo = new STProgrammeInfo();
-                        programmeInfo = STProgrammeInfo.decodeFromJSON(object);
-
-                        arrProgrammeInfos.add(programmeInfo);
-                    }
-
-                    showProgrammes();
-                }
-
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
         }
-
-        @Override
-        public void onFailure(Throwable error, String content) {
-            super.onFailure(error, content);    //To change body of overridden methods use File | Settings | File Templates.
-            stopProgress();
+        else if (v == rlCeremony) {
+            Intent intent = new Intent(ProgrammeActivity.this, ProgrammeListActivity.class);
+            intent.putExtra("TYPE", ProgrammeListActivity.MODE_CEREMONY);
+            intent.putExtra(GlobalFunc.ANIM_DIRECTION(), GlobalFunc.ANIM_COVER_FROM_LEFT());
+            ProgrammeActivity.this.getIntent().putExtra(GlobalFunc.ANIM_DIRECTION(), GlobalFunc.ANIM_COVER_FROM_RIGHT());
+            startActivity(intent);
         }
-    };
-
-    private void showProgrammes() {
-        llContent.removeAllViews();
-
-        int nCount = arrProgrammeInfos.size();
-        for (int i = 0; i < nCount; i++) {
-            STProgrammeInfo stProgrammeInfo = arrProgrammeInfos.get(i);
-
-            if (curDayNumber != stProgrammeInfo.dayNumber) {
-                curDayNumber = stProgrammeInfo.dayNumber;
-
-                LayoutInflater inflater = (LayoutInflater)this.getSystemService(this.LAYOUT_INFLATER_SERVICE);
-                View viewHeader = inflater.inflate(R.layout.view_programitemheader, null);
-                ResolutionSet._instance.iterateChild(viewHeader);
-                TextView textHeader = (TextView) viewHeader.findViewById(R.id.textHeaderName);
-                textHeader.setText(stProgrammeInfo.dayName + " " + stProgrammeInfo.dayNumber + " (" + stProgrammeInfo.dateFormat + ")");
-
-                llContent.addView(viewHeader);
-            }
-
-            LayoutInflater inflater = (LayoutInflater)this.getSystemService(this.LAYOUT_INFLATER_SERVICE);
-            View viewData = inflater.inflate(R.layout.view_programitemdata, null);
-            ResolutionSet._instance.iterateChild(viewData);
-            TextView textHeader = (TextView) viewData.findViewById(R.id.textData);
-            textHeader.setText(stProgrammeInfo.startTime + " - " + stProgrammeInfo.endTime + "    " + stProgrammeInfo.speackerName + ": " + stProgrammeInfo.desc );
-
-            llContent.addView(viewData);
+        else if (v == rlShare) {
+            Intent intent = new Intent(ProgrammeActivity.this, ProgrammeListActivity.class);
+            intent.putExtra("TYPE", ProgrammeListActivity.MODE_SHARE);
+            intent.putExtra(GlobalFunc.ANIM_DIRECTION(), GlobalFunc.ANIM_COVER_FROM_LEFT());
+            ProgrammeActivity.this.getIntent().putExtra(GlobalFunc.ANIM_DIRECTION(), GlobalFunc.ANIM_COVER_FROM_RIGHT());
+            startActivity(intent);
+        }
+        else if (v == rlConference) {
+            Intent intent = new Intent(ProgrammeActivity.this, ProgrammeListActivity.class);
+            intent.putExtra("TYPE", ProgrammeListActivity.MODE_CONFERENCE);
+            intent.putExtra(GlobalFunc.ANIM_DIRECTION(), GlobalFunc.ANIM_COVER_FROM_LEFT());
+            ProgrammeActivity.this.getIntent().putExtra(GlobalFunc.ANIM_DIRECTION(), GlobalFunc.ANIM_COVER_FROM_RIGHT());
+            startActivity(intent);
+        }
+        else if (v == rlFlim) {
+            Intent intent = new Intent(ProgrammeActivity.this, ProgrammeListActivity.class);
+            intent.putExtra("TYPE", ProgrammeListActivity.MODE_FLIM);
+            intent.putExtra(GlobalFunc.ANIM_DIRECTION(), GlobalFunc.ANIM_COVER_FROM_LEFT());
+            ProgrammeActivity.this.getIntent().putExtra(GlobalFunc.ANIM_DIRECTION(), GlobalFunc.ANIM_COVER_FROM_RIGHT());
+            startActivity(intent);
+        }
+        else if (v == rlExpo) {
+//            Intent intent = new Intent(ProgrammeActivity.this, ProgrammeListActivity.class);
+//            intent.putExtra("TYPE", ProgrammeListActivity.MODE_EXPO);
+//            intent.putExtra(GlobalFunc.ANIM_DIRECTION(), GlobalFunc.ANIM_COVER_FROM_LEFT());
+//            ProgrammeActivity.this.getIntent().putExtra(GlobalFunc.ANIM_DIRECTION(), GlobalFunc.ANIM_COVER_FROM_LEFT());
+//            startActivity(intent);
         }
     }
 }

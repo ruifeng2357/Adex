@@ -11,7 +11,7 @@
         <view android:layout_width="fill_parent"
               android:layout_height="300px"
               class="com.jilcreation.ui.SmartImageView.SmartImageView" android:id="@+id/imageLeftDeal"
-              android:scaleType="fitCenter" android:src="@drawable/def_product"/>
+              android:scaleType="fitCenter" />
 
         <LinearLayout android:layout_width="fill_parent" android:layout_height="fill_parent"
                       android:id="@+id/llLeftDealBack" android:orientation="horizontal"
@@ -50,7 +50,7 @@
         <view android:layout_width="fill_parent"
               android:layout_height="300px"
               class="com.jilcreation.ui.SmartImageView.SmartImageView" android:id="@+id/imageRightDeal"
-              android:scaleType="fitCenter" android:src="@drawable/def_product"/>
+              android:scaleType="fitCenter"/>
 
         <LinearLayout android:layout_width="fill_parent" android:layout_height="fill_parent"
                       android:id="@+id/llRightDealBack" android:orientation="horizontal"
